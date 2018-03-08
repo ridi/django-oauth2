@@ -4,7 +4,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 lint:
-	@python3.6 $(shell which pylint) ./src/ --rcfile=.pylintrc && flake8
+	@python3.6 $(shell which pylint)  ./oauth2_client/ ./django_oauth2_client/ --rcfile=.pylintrc && flake8
 
 test:
 	@python3.6 runtests.py
