@@ -22,7 +22,7 @@ SETTINGS_DICT = {
         'django.contrib.contenttypes',
         'django.contrib.sites',
         'django_oauth2_client',
-        'oauth2_client',
+        'tests',
     ],
     'MIDDLEWARE_CLASSES': (
         'django_oauth2_client.middlewares.AuthenticationMiddleware',
@@ -38,7 +38,7 @@ SETTINGS_DICT = {
 
 def run_tests(*test_args):
     if not test_args:
-        test_args = ['django_oauth2_client', 'oauth2_client']
+        test_args = ['tests']
 
     settings.configure(**SETTINGS_DICT)
 
