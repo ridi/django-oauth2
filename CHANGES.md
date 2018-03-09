@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.1 (Mar 8th 2018)
+0.0.1 (Mar 9th 2018)
 ------------------
 
 ### Register New Package
