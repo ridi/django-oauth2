@@ -7,17 +7,12 @@ with open('requirements/base.txt') as f:
 
 
 setup(
-    ## temporary
-    name='django-shard-library',
-
+    name='ridi-django-oauth2-resource',
     version=version,
-
-    ## temporary
-    url='https://github.com/ridi/djang-shard-library',
-
+    url='https://github.com/ridi/ridi-django-oauth2-resource',
     license='MIT',
-    description='RIDI Python OAuth2 Library',
-    keywords=['oauth2', 'ridi', 'ridibooks'],
+    description='RIDI Django OAuth2 Library',
+    keywords=['oauth2', 'oauth2-resource', 'ridi', 'ridibooks'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
