@@ -9,10 +9,10 @@ from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 from django.test import TestCase
 
-from django_oauth2_client.config import RidiOAuth2Config
-from django_oauth2_client.middlewares import AuthenticationMiddleware
-from django_oauth2_client.response import HttpUnauthorizedResponse
-from oauth2_client.dtos import TokenData
+from ridi_django_oauth2_resource.config import RidiOAuth2Config
+from ridi_django_oauth2_resource.middlewares import AuthenticationMiddleware
+from ridi_django_oauth2_resource.response import HttpUnauthorizedResponse
+from ridi_oauth2.common.dtos import TokenData
 
 
 class AuthenticationMiddlewareTestCase(TestCase):
@@ -88,44 +88,3 @@ class AuthenticationMiddlewareTestCase(TestCase):
         self.assertIsNone(response, HttpUnauthorizedResponse)
         self.assertIsInstance(request.user, AnonymousUser)
         self.assertFalse(request.user.is_authenticated)
-
-    def test_access_token_expire_and_refresh_available(self):
-        with requests_mock.Mocker() as m:
-            m.post(RidiOAuth2Config.get_auth_server_info().token_url, text=json.dumps({
-                'access_token': self.valid_token,
-                'token_type': 'Bearer',
-                'expires_in': 3600,
-                'refresh_token': 'tGzv3JOkF0XG5Qx2TlKWIA',
-                'refresh_token_expires_in': 3600 * 7,
-                'scope': 'all',
-            }))
-
-            request = Mock()
-            request.COOKIES = {
-                RidiOAuth2Config.get_access_token_cookie_key(): self.expire_token,
-                RidiOAuth2Config.get_refresh_token_cookie_key(): 'dummy-refresh-token'
-            }
-
-            response = self.middleware.process_request(request=request)
-            token = getattr(request, '_token', None)
-
-            self.assertIsNone(response)
-            self.assertIsNotNone(token)
-            self.assertEqual(token.access_token.token, self.valid_token)
-            self.assertEqual(token.access_token.expires_in, 3600)
-            self.assertEqual(token.refresh_token.token, 'tGzv3JOkF0XG5Qx2TlKWIA')
-            self.assertEqual(token.refresh_token.expires_in, 3600 * 7)
-            self.assertEqual(token.token_type, 'Bearer')
-            self.assertEqual(token.scope, 'all')
-
-    def test_set_cookie_response(self):
-        request = Mock()
-        request._token = TokenData.from_dict(  # flake8: noqa: W0212  # pylint:disable=protected-access
-            {'access_token': 'this_is_new_dummy_at', 'refresh_token': 'this_is_new_dummy_rt'}
-        )
-        response = HttpResponse()
-
-        response = self.middleware.process_response(request=request, response=response)
-
-        self.assertIn(RidiOAuth2Config.get_access_token_cookie_key(), response.cookies)
-        self.assertIn(RidiOAuth2Config.get_refresh_token_cookie_key(), response.cookies)

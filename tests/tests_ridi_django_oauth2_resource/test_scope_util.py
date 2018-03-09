@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from django_oauth2_client.constants import Scope
-from django_oauth2_client.utils.scope import scope_check
+from ridi_oauth2.resource.constants import Scope
+from ridi_oauth2.resource.scope import scope_check
 
 
 class ScopeUtilTestCase(TestCase):

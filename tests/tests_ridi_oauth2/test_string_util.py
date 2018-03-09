@@ -1,7 +1,7 @@
 import string as string_lib
 import unittest
 
-from oauth2_client.utils.string import DEFAULT_LENGTH, UNICODE_ASCII_CHARACTER_SET, generate_random_str
+from ridi_oauth2.common.utils.string import DEFAULT_LENGTH, UNICODE_ASCII_CHARACTER_SET, generate_random_str
 
 
 class StateTestCase(unittest.TestCase):

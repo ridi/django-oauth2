@@ -5,10 +5,10 @@ import jwt
 from django.http import HttpResponse, HttpResponseForbidden
 from django.test import TestCase
 
-from django_oauth2_client.config import RidiOAuth2Config
-from django_oauth2_client.decorators import login_required, scope_required
-from django_oauth2_client.middlewares import AuthenticationMiddleware
-from django_oauth2_client.response import HttpUnauthorizedResponse
+from ridi_django_oauth2_resource.config import RidiOAuth2Config
+from ridi_django_oauth2_resource.decorators import login_required, scope_required
+from ridi_django_oauth2_resource.middlewares import AuthenticationMiddleware
+from ridi_django_oauth2_resource.response import HttpUnauthorizedResponse
 
 
 def response_handler(request, *args, **kwargs) -> HttpResponse:

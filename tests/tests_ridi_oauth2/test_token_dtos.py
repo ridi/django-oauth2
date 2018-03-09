@@ -1,7 +1,8 @@
 import unittest
 from datetime import datetime
 
-from oauth2_client.dtos import AccessTokenInfo, TokenData
+from ridi_oauth2.common.dtos import TokenData
+from ridi_oauth2.introspetor.dtos import AccessTokenInfo
 
 
 class TokenTestCase(unittest.TestCase):

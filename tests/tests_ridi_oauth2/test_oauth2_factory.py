@@ -1,12 +1,12 @@
 import unittest
 
-from oauth2_client.constants import OAuth2GrantType
-from oauth2_client.exceptions import NotSupportedGrantException
-from oauth2_client.oauth2.dtos import AuthorizationServerInfo, ClientInfo
-from oauth2_client.oauth2.factory import OAuth2GrantFactory
-from oauth2_client.oauth2.grant.authorization_code import AuthorizationCodeGrant
-from oauth2_client.oauth2.grant.base import BaseGrant
-from oauth2_client.oauth2.grant.refresh_token import RefreshTokenGrant
+from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.client.exceptions import NotSupportedGrantException
+from ridi_oauth2.client.factory import OAuth2GrantFactory
+from ridi_oauth2.client.grant.authorization_code import AuthorizationCodeGrant
+from ridi_oauth2.client.grant.base import BaseGrant
+from ridi_oauth2.client.grant.refresh_token import RefreshTokenGrant
+from ridi_oauth2.common.constants import OAuth2GrantType
 
 
 class OAuth2FactoryTestCase(unittest.TestCase):

@@ -8,7 +8,7 @@ import unittest
 
 import jwt
 
-from oauth2_client.utils.string import generate_random_str
+from ridi_oauth2.common.utils.string import generate_random_str
 
 
 class JWTTestCase(unittest.TestCase):

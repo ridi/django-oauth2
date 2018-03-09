@@ -4,10 +4,10 @@ import unittest
 
 import jwt
 
-from oauth2_client.exceptions import ExpireTokenException, InvalidJwtSignatureException
-from oauth2_client.introspetor.dtos import JwtInfo
-from oauth2_client.introspetor.jwt_introspector import JwtIntrospector
-from oauth2_client.utils.string import generate_random_str
+from ridi_oauth2.common.utils.string import generate_random_str
+from ridi_oauth2.introspetor.dtos import JwtInfo
+from ridi_oauth2.introspetor.exceptions import ExpireTokenException, InvalidJwtSignatureException
+from ridi_oauth2.introspetor.jwt_introspector import JwtIntrospector
 
 
 class JwtIntrospectorTestCase(unittest.TestCase):
