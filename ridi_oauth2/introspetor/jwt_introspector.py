@@ -3,9 +3,9 @@ import typing
 
 import jwt
 
-from oauth2_client.constants import TokenType
-from oauth2_client.exceptions import ExpireTokenException, InvalidJwtSignatureException
-from oauth2_client.introspetor.dtos import JwtInfo
+from ridi_oauth2.common.constants import TokenType
+from ridi_oauth2.introspetor.dtos import JwtInfo
+from ridi_oauth2.introspetor.exceptions import ExpireTokenException, InvalidJwtSignatureException
 from .base import BaseIntrospector
 
 

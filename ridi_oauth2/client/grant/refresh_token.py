@@ -1,7 +1,7 @@
 import typing
 
-from oauth2_client.constants import HttpMethod, OAuth2GrantType
-from oauth2_client.dtos import TokenData
+from ridi_oauth2.common.constants import HttpMethod, OAuth2GrantType
+from ridi_oauth2.common.dtos import TokenData
 from .base import BaseGrant
 
 

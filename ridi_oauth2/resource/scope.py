@@ -1,10 +1,8 @@
 import typing
 
-from django_oauth2_client.constants import Scope
+from ridi_oauth2.resource.constants import DEFAULT_SCOPE_DELIMITER, Scope
 
 USER_SCOPE_TYPE = typing.TypeVar('USER_SCOPE_TYPE', typing.List, str)
-
-DEFAULT_SCOPE_DELIMITER = ' '
 
 
 def scope_check(require_scopes: typing.List[str], user_scopes: USER_SCOPE_TYPE, delimiter: str=DEFAULT_SCOPE_DELIMITER) -> bool:

@@ -3,10 +3,10 @@ from json import JSONDecodeError
 
 import requests
 
-from oauth2_client.constants import HttpStatusCode
-from oauth2_client.dtos import TokenData
-from oauth2_client.exceptions import AuthorizationException, OAuthFailureException
-from oauth2_client.oauth2.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.client.exceptions import AuthorizationException, OAuthFailureException
+from ridi_oauth2.common.constants import HttpStatusCode
+from ridi_oauth2.common.dtos import TokenData
 
 
 class BaseGrant:
@@ -31,7 +31,7 @@ class BaseGrant:
             response.raise_for_status()
             return response.json()
         except JSONDecodeError:
-            raise AuthorizationException
+            raise AuthorizationException()
         except requests.HTTPError as e:
             cls._process_exception(exception=e)
 

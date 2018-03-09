@@ -1,18 +1,9 @@
 from django.conf import settings
 
-from oauth2_client.introspetor.dtos import JwtInfo
-from oauth2_client.oauth2.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.introspetor.dtos import JwtInfo
 
 
 class _Settings:
-    CLIENT_ID = 'RIDI_OAUTH2_CLIENT_ID'
-    CLIENT_SECRET = 'RIDI_OAUTH2_CLIENT_SECRET'
-    SCOPE = 'RIDI_OAUTH2_SCOPE'
-    REDIRECT_URI = 'RIDI_OAUTH2_REDIRECT_URI'
-
-    AUTHORIZATION_URL = 'RIDI_OAUTH2_AUTHORIZATION_URL'
-    TOKEN_URL = 'RIDI_OAUTH2_TOKEN_URL'
-
     JWT_SECRET_NAME = 'RIDI_OAUTH2_JWT_SECRET'
     JWT_ALGORITHM_NAME = 'RIDI_OAUTH2_JWT_ALGORITHM'
     JWT_EXPIRE_TERM_NAME = 'RIDI_OAUTH2_JWT_EXPIRE_TERM'
@@ -31,23 +22,6 @@ class _Default:
     REFRESH_TOKEN_COOKIE_KEY = "ridi-rt"
 
 
-# ClientInfo
-_RIDI_OAUTH2_CLIENT_ID = getattr(settings, _Settings.CLIENT_ID)
-_RIDI_OAUTH2_CLIENT_SECRET = getattr(settings, _Settings.CLIENT_SECRET)
-_RIDI_OAUTH2_SCOPE = getattr(settings, _Settings.SCOPE, None)
-_RIDI_OAUTH2_REDIRECT_URI = getattr(settings, _Settings.REDIRECT_URI, None)
-
-_CLIENT_INFO = ClientInfo(
-    client_id=_RIDI_OAUTH2_CLIENT_ID, client_secret=_RIDI_OAUTH2_CLIENT_SECRET, scope=_RIDI_OAUTH2_SCOPE,
-    redirect_uri=_RIDI_OAUTH2_REDIRECT_URI
-)
-
-# AuthServerInfo
-_RIDI_OAUTH2_AUTHORIZATION_URL = getattr(settings, _Settings.AUTHORIZATION_URL)
-_RIDI_OAUTH2_TOKEN_URL = getattr(settings, _Settings.TOKEN_URL)
-
-_AUTH_SERVER_INFO = AuthorizationServerInfo(authorization_url=_RIDI_OAUTH2_AUTHORIZATION_URL, token_url=_RIDI_OAUTH2_TOKEN_URL)
-
 # JwtInfo
 _RIDI_OAUTH2_JWT_SECRET = getattr(settings, _Settings.JWT_SECRET_NAME)
 _RIDI_OAUTH2_JWT_ALGORITHM = getattr(settings, _Settings.JWT_ALGORITHM_NAME, _Default.JWT_ALGORITHM)
@@ -64,14 +38,6 @@ _RIDI_REFRESH_TOKEN_COOKIE_KEY = getattr(settings, _Settings.REFRESH_TOKEN_COOKI
 
 
 class RidiOAuth2Config:
-    @staticmethod
-    def get_client_info() -> ClientInfo:
-        return _CLIENT_INFO
-
-    @staticmethod
-    def get_auth_server_info() -> AuthorizationServerInfo:
-        return _AUTH_SERVER_INFO
-
     @staticmethod
     def get_jwt_info() -> JwtInfo:
         return _JWT_INFO

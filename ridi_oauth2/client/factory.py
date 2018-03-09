@@ -1,10 +1,10 @@
 
-from oauth2_client.constants import OAuth2GrantType
-from oauth2_client.exceptions import NotSupportedGrantException
-from oauth2_client.oauth2.dtos import AuthorizationServerInfo, ClientInfo
-from oauth2_client.oauth2.grant.authorization_code import AuthorizationCodeGrant
-from oauth2_client.oauth2.grant.base import BaseGrant
-from oauth2_client.oauth2.grant.refresh_token import RefreshTokenGrant
+from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.client.exceptions import NotSupportedGrantException
+from ridi_oauth2.client.grant.authorization_code import AuthorizationCodeGrant
+from ridi_oauth2.client.grant.base import BaseGrant
+from ridi_oauth2.client.grant.refresh_token import RefreshTokenGrant
+from ridi_oauth2.common.constants import OAuth2GrantType
 
 
 class OAuth2GrantFactory:
@@ -15,4 +15,4 @@ class OAuth2GrantFactory:
         elif grant_type == OAuth2GrantType.REFRESH_TOKEN:
             return RefreshTokenGrant(client_info=client_info, auth_server_info=auth_server_info)
 
-        raise NotSupportedGrantException
+        raise NotSupportedGrantException()

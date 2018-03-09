@@ -1,17 +1,5 @@
 
-import typing
 
-
-# Introspec Exception
-class InvalidJwtSignatureException(Exception):
-    pass
-
-
-class ExpireTokenException(Exception):
-    pass
-
-
-# OAuth Exception
 class AuthorizationException(Exception):
     pass
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 
-from django_oauth2_client.managers import RidiUserManager
+from ridi_django_oauth2_resource.managers import RidiUserManager
 
 
 class RidiUser(AbstractBaseUser):
