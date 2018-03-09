@@ -21,7 +21,7 @@ setup(
         'Framework :: Django :: 2.0',
         'Programming Language :: Python :: 3.6',
     ],
-    packages=find_packages(exclude=('tests', 'docs',)),
+    packages=find_packages(exclude=["tests.*", "tests"]),
     install_requires=install_requires,
     include_package_data=True,
 )
