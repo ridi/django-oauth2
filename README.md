@@ -18,16 +18,16 @@
 
 INSTALLED_APPS = [
     # ...
-    'django_oauth2_client',
+    'ridi_django_oauth2_resource',
 ]
 
 # Middleware Setting
 MIDDLEWARE_CLASSES = (
     # ...
-    'django_oauth2_client.middlewares.AuthenticationMiddleware',
+    'ridi_django_oauth2_resource.middlewares.AuthenticationMiddleware',
 )
 
-AUTH_USER_MODEL = 'django_oauth2_client.RidiUser'
+AUTH_USER_MODEL = 'ridi_django_oauth2_resource.RidiUser'
 
 
 # RIDI Setting
