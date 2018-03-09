@@ -1,0 +1,5 @@
+
+PyJWT==1.5.3
+requests==2.18.4
+
+Django==2.0.2
