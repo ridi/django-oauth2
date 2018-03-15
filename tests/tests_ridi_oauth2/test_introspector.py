@@ -5,9 +5,9 @@ import unittest
 import jwt
 
 from ridi_oauth2.common.utils.string import generate_random_str
-from ridi_oauth2.introspetor.dtos import JwtInfo
-from ridi_oauth2.introspetor.exceptions import ExpireTokenException, InvalidJwtSignatureException
-from ridi_oauth2.introspetor.jwt_introspector import JwtIntrospector
+from ridi_oauth2.introspector.dtos import JwtInfo
+from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException
+from ridi_oauth2.introspector.jwt_introspector import JwtIntrospector
 
 
 class JwtIntrospectorTestCase(unittest.TestCase):

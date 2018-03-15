@@ -1,7 +1,7 @@
 import unittest
 
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
-from ridi_oauth2.introspetor.dtos import JwtInfo
+from ridi_oauth2.introspector.dtos import JwtInfo
 
 
 class JwtInfoTestCase(unittest.TestCase):

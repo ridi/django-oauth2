@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from ridi_oauth2.introspetor.dtos import JwtInfo
+from ridi_oauth2.introspector.dtos import JwtInfo
 
 
 class _Settings:
