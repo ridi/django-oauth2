@@ -1,9 +1,14 @@
 Changelog
 =========
 
+0.0.2 (Mar 16th 2018)
+------------------
+### Fix
+- Fix login_required Decorator
+
+
 0.0.1 (Mar 9th 2018)
 ------------------
-
 ### Register New Package
 - Addition of initial functions related to OAuth2.
     - Pure Python Client
