@@ -26,8 +26,8 @@ class LoginRequireTestCase(TestCase):
             'scope': 'all'
         }
 
-        self.dummy_view = login_required(MagicMock(return_value=HttpResponse(content='success')))
-        self.custom_dummy_view = login_required(MagicMock(return_value=HttpResponse(content='success')), response_handler=response_handler)
+        self.dummy_view = login_required()(MagicMock(return_value=HttpResponse(content='success')))
+        self.custom_dummy_view = login_required(response_handler=response_handler)(MagicMock(return_value=HttpResponse(content='success')))
 
     def test_not_login(self):
         request = Mock()

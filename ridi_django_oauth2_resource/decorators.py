@@ -8,20 +8,21 @@ from ridi_oauth2.resource.scope import scope_check
 RESPONSE_HANDLER_TYPE = typing.Optional[typing.Callable]
 
 
-def login_required(func, response_handler: RESPONSE_HANDLER_TYPE=None):
-    def wrapper(self, request, *args, **kwargs):
-        user = request.user
+def login_required(response_handler: RESPONSE_HANDLER_TYPE=None):
+    def decorator(func):
+        def wrapper(self, request, *args, **kwargs):
+            user = request.user
 
-        if not user or not user.is_authenticated:
-            return _process_response_handler(request, response_handler, *args, **kwargs) or HttpUnauthorizedResponse()
+            if not user or not user.is_authenticated:
+                return _process_response_handler(request, response_handler, *args, **kwargs) or HttpUnauthorizedResponse()
 
-        token_info = getattr(request.user, 'token_info', None)
-        if token_info is None:
-            return _process_response_handler(request, response_handler, *args, **kwargs) or HttpUnauthorizedResponse()
+            token_info = getattr(request.user, 'token_info', None)
+            if token_info is None:
+                return _process_response_handler(request, response_handler, *args, **kwargs) or HttpUnauthorizedResponse()
 
-        return func(self, request, *args, **kwargs)
-
-    return wrapper
+            return func(self, request, *args, **kwargs)
+        return wrapper
+    return decorator
 
 
 def scope_required(required_scopes: typing.List[str], response_handler: RESPONSE_HANDLER_TYPE=None):
@@ -35,9 +36,7 @@ def scope_required(required_scopes: typing.List[str], response_handler: RESPONSE
                 ) or HttpResponseForbidden()
 
             return func(self, request, *args, **kwargs)
-
-        return login_required(wrapper)
-
+        return login_required(response_handler)(wrapper)
     return decorator
 
 
