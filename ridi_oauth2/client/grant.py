@@ -6,8 +6,8 @@ import requests
 
 from ridi_oauth2.client.constants import OAuth2GrantType
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo, TokenData
-from ridi_oauth2.client.exceptions import AuthorizationException, OAuthFailureException
-from ridi_oauth2.common.constants import HttpMethod, HttpStatusCode
+from ridi_oauth2.client.exceptions import InvalidResponseException, OAuthFailureException
+from ridi_oauth2.common.constants import HttpMethod
 
 
 class Grant:
@@ -63,16 +63,13 @@ class Grant:
             response.raise_for_status()
             return TokenData.from_dict(response.json())
         except JSONDecodeError:
-            raise AuthorizationException()
+            raise InvalidResponseException()
         except requests.HTTPError as e:
             cls._process_exception(exception=e)
 
     @staticmethod
     def _process_exception(exception: requests.HTTPError):
         response = exception.response
-
-        if response.status_code != HttpStatusCode.HTTP_400_BAD_REQUEST:
-            raise exception
 
         try:
             error_response = response.json()

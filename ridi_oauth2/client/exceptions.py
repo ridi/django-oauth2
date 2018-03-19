@@ -1,6 +1,6 @@
 
 
-class AuthorizationException(Exception):
+class InvalidResponseException(Exception):
     pass
 
 
