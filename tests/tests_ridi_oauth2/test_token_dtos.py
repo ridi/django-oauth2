@@ -4,6 +4,7 @@ from datetime import datetime
 from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 
+
 class TokenTestCase(unittest.TestCase):
     def setUp(self):
         self.simple_token_dict = {
