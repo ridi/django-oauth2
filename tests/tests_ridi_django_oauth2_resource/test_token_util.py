@@ -37,4 +37,4 @@ class TokenUtilTestCase(TestCase):
         self.assertEqual(token_info.u_idx, payload['u_idx'])
         self.assertEqual(token_info.expire_timestamp, payload['exp'])
         self.assertEqual(token_info.client_id, payload['client_id'])
-        self.assertEqual(token_info.scope, payload['scope'])
+        self.assertIn(payload['scope'], token_info.scope)

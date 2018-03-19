@@ -3,7 +3,7 @@ import typing
 from django.http import HttpResponse, HttpResponseForbidden
 
 from ridi_django_oauth2_resource.response import HttpUnauthorizedResponse
-from ridi_oauth2.resource.scope import scope_check
+from ridi_oauth2.resource.scope_checker import ScopeChecker
 
 RESPONSE_HANDLER_TYPE = typing.Optional[typing.Callable]
 
@@ -30,7 +30,7 @@ def scope_required(required_scopes: typing.List[str], response_handler: RESPONSE
         def wrapper(self, request, *args, **kwargs):
             token_info = request.user.token_info
 
-            if not scope_check(require_scopes=required_scopes, user_scopes=token_info.scope):
+            if not ScopeChecker.check(require_scopes=required_scopes, user_scopes=token_info.scope):
                 return _process_response_handler(
                     request, response_handler, required_scopes=required_scopes, *args, **kwargs
                 ) or HttpResponseForbidden()
