@@ -24,7 +24,7 @@ class JwtInfo:
 
 
 class AccessTokenInfo:
-    def __init__(self, subject: str, u_idx: int, expire: int, client_id: str, scope: str):
+    def __init__(self, subject: str, u_idx: int, expire: int, client_id: str, scope: typing.List):
         self._subject = subject
         self._u_idx = u_idx
         self._expire_timestamp = expire
@@ -53,7 +53,7 @@ class AccessTokenInfo:
         return self._client_id
 
     @property
-    def scope(self) -> str:
+    def scope(self) -> typing.List:
         return self._scope
 
     @staticmethod
