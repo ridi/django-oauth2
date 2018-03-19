@@ -25,6 +25,8 @@ class JwtIntrospector(BaseIntrospector):
             raise ExpireTokenException
         except jwt.exceptions.DecodeError:
             raise InvalidJwtSignatureException
+        except jwt.InvalidAlgorithmError:
+            raise InvalidJwtSignatureException
 
         payload = self._active_response(payload=payload)
         payload = self._split_scopes(payload=payload)
