@@ -41,7 +41,6 @@ def run_tests(*test_args):
         test_args = ['tests']
 
     settings.configure(**SETTINGS_DICT)
-
     django.setup()
 
     # Run tests
