@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from ridi_oauth2.common.dtos import TokenData
-from ridi_oauth2.introspetor.dtos import AccessTokenInfo
+from ridi_oauth2.introspector.dtos import AccessTokenInfo
 
 
 class TokenTestCase(unittest.TestCase):

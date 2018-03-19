@@ -4,8 +4,8 @@ import typing
 import jwt
 
 from ridi_oauth2.common.constants import TokenType
-from ridi_oauth2.introspetor.dtos import JwtInfo
-from ridi_oauth2.introspetor.exceptions import ExpireTokenException, InvalidJwtSignatureException
+from ridi_oauth2.introspector.dtos import JwtInfo
+from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException
 from .base import BaseIntrospector
 
 

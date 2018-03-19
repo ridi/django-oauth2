@@ -4,9 +4,9 @@ from django.http import HttpRequest
 
 from ridi_django_oauth2_resource.config import RidiOAuth2Config
 from ridi_oauth2.common.dtos import TokenData
-from ridi_oauth2.introspetor.dtos import AccessTokenInfo
-from ridi_oauth2.introspetor.exceptions import ExpireTokenException, InvalidJwtSignatureException
-from ridi_oauth2.introspetor.jwt_introspector import JwtIntrospector
+from ridi_oauth2.introspector.dtos import AccessTokenInfo
+from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException
+from ridi_oauth2.introspector.jwt_introspector import JwtIntrospector
 
 
 def get_token_from_cookie(request: HttpRequest) -> TokenData:
