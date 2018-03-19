@@ -96,12 +96,12 @@ class ScopeRequireTestCase(TestCase):
         }
 
         self.dummy_view1 = scope_required(required_scopes=['user_info'])(MagicMock(return_value=HttpResponse(content='success1')))
-        self.dummy_view2 = scope_required(required_scopes=['user_info', 'purchase'])(
+        self.dummy_view2 = scope_required(required_scopes=[('user_info', 'purchase')])(
             MagicMock(return_value=HttpResponse(content='success2'))
         )
-        self.dummy_view_with_custom_response = scope_required(required_scopes=['user_info', 'purchase'], response_handler=response_handler)(
-            MagicMock(return_value=HttpResponse(content='success2'))
-        )
+        self.dummy_view_with_custom_response = scope_required(
+            required_scopes=[('user_info', 'purchase')], response_handler=response_handler
+        )(MagicMock(return_value=HttpResponse(content='success2')))
 
     def test_all_scope(self):
         request = Mock()
@@ -113,7 +113,7 @@ class ScopeRequireTestCase(TestCase):
         response1 = self.dummy_view1(None, request)
         response2 = self.dummy_view2(None, request)
 
-        self.assertEqual(request.user.token_info.scope, 'all')
+        self.assertIn('all', request.user.token_info.scope)
 
         self.assertIsInstance(response1, HttpResponse)
         self.assertEqual(response1.status_code, 200)
@@ -133,7 +133,7 @@ class ScopeRequireTestCase(TestCase):
         response1 = self.dummy_view1(None, request)
         response2 = self.dummy_view2(None, request)
 
-        self.assertEqual(request.user.token_info.scope, 'user_info')
+        self.assertIn('user_info', request.user.token_info.scope)
 
         self.assertIsInstance(response1, HttpResponse)
         self.assertEqual(response1.status_code, 200)
@@ -151,7 +151,7 @@ class ScopeRequireTestCase(TestCase):
 
         response = self.dummy_view_with_custom_response(None, request)
 
-        self.assertEqual(request.user.token_info.scope, 'user_info')
+        self.assertIn('user_info', request.user.token_info.scope)
 
         self.assertIsInstance(response, HttpResponse)
         self.assertEqual(response.content, b'tetete')

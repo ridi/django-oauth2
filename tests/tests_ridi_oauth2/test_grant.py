@@ -3,9 +3,9 @@ import unittest
 
 import requests_mock
 
+from ridi_oauth2.client.constants import OAuth2GrantType
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
 from ridi_oauth2.client.factory import OAuth2GrantFactory
-from ridi_oauth2.common.constants import OAuth2GrantType
 
 
 class AuthorizationCodeGrantTestCase(unittest.TestCase):
