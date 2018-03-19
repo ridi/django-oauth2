@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime
 
-from ridi_oauth2.common.dtos import TokenData
+from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 
 

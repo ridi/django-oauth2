@@ -36,22 +36,13 @@ SETTINGS_DICT = {
 }
 
 
-def run_tests(*test_args):
-    if not test_args:
-        test_args = ['tests']
-
+def run_command(*args):
     settings.configure(**SETTINGS_DICT)
     django.setup()
 
-    # Run tests
-    from django.test.utils import get_runner
-    TestRunner = get_runner(settings)
-
-    test_runner = TestRunner()
-    failures = test_runner.run_tests(test_args, interactive=False)
-
-    sys.exit(bool(failures))
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(args)
 
 
 if __name__ == '__main__':
-    run_tests(*sys.argv[1:])
+    run_command(*sys.argv[:])

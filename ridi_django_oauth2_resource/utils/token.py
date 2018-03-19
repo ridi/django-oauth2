@@ -3,10 +3,10 @@ import typing
 from django.http import HttpRequest
 
 from ridi_django_oauth2_resource.config import RidiOAuth2Config
-from ridi_oauth2.common.dtos import TokenData
+from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException
-from ridi_oauth2.introspector.jwt_introspector import JwtIntrospector
+from ridi_oauth2.introspector.helpers import JwtIntrospectHelper
 
 
 def get_token_from_cookie(request: HttpRequest) -> TokenData:
@@ -18,8 +18,7 @@ def get_token_from_cookie(request: HttpRequest) -> TokenData:
 
 def get_token_info(token: str) -> typing.Optional[AccessTokenInfo]:
     try:
-        result = JwtIntrospector(jwt_info=RidiOAuth2Config.get_jwt_info(), access_token=token).introspect()
-        token_info = AccessTokenInfo.from_dict(dictionary=result)
+        token_info = JwtIntrospectHelper.introspect(jwt_info=RidiOAuth2Config.get_jwt_info(), access_token=token)
     except (KeyError, ExpireTokenException, InvalidJwtSignatureException):
         token_info = None
 
