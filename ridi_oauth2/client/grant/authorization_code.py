@@ -2,7 +2,7 @@ import typing
 import urllib.parse
 
 from ridi_oauth2.common.constants import HttpMethod, OAuth2GrantType
-from ridi_oauth2.common.dtos import TokenData
+from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.common.utils.string import generate_random_str
 from .base import BaseGrant
 
