@@ -25,7 +25,7 @@ def login_required(response_handler: RESPONSE_HANDLER_TYPE=None):
     return decorator
 
 
-def scope_required(required_scopes: typing.List[str], response_handler: RESPONSE_HANDLER_TYPE=None):
+def scope_required(required_scopes: typing.List, response_handler: RESPONSE_HANDLER_TYPE=None):
     def decorator(func):
         def wrapper(self, request, *args, **kwargs):
             token_info = request.user.token_info

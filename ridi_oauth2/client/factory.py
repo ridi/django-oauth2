@@ -1,10 +1,10 @@
 
+from ridi_oauth2.client.constants import OAuth2GrantType
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
 from ridi_oauth2.client.exceptions import NotSupportedGrantException
 from ridi_oauth2.client.grant.authorization_code import AuthorizationCodeGrant
 from ridi_oauth2.client.grant.base import BaseGrant
 from ridi_oauth2.client.grant.refresh_token import RefreshTokenGrant
-from ridi_oauth2.common.constants import OAuth2GrantType
 
 
 class OAuth2GrantFactory:

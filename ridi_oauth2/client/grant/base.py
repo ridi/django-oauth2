@@ -4,9 +4,9 @@ from json import JSONDecodeError
 import requests
 
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
+from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.client.exceptions import AuthorizationException, OAuthFailureException
 from ridi_oauth2.common.constants import HttpStatusCode
-from ridi_oauth2.client.dtos import TokenData
 
 
 class BaseGrant:
