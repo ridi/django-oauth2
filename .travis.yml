@@ -3,7 +3,6 @@ python:
   - '3.6'
 
 stages:
-  - install
   - test
   - name: deploy
     if: "(tag IS present) AND (branch = master)"
