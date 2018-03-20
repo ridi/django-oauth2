@@ -11,10 +11,11 @@ stages:
 install:
   - make install-travis
 
-job:
+jobs:
   include:
   - stage: test
     script: make test
+
   - stage: deploy
     script: skip
     deploy:
