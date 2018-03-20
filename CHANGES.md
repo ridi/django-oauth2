@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.0.3 (Mar 20th 2018)
+------------------
+- Rewrite code structure in ridi_oauth2 package.
+    - Change grant object, change logic for check scope and ...etc
+- Add migrations about RidiUser Model
+- Configure travis
+
+
 0.0.2 (Mar 16th 2018)
 ------------------
 ### Fix
