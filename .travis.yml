@@ -5,7 +5,7 @@ python:
 stages:
   - test
   - name: deploy
-    if: "(tag IS present) AND (branch = master)"
+    if: (tag IS present) AND (repo = ridi/ridi-django-oauth2-resource)
 
 jobs:
   include:
