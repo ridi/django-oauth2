@@ -3,15 +3,16 @@ python:
   - '3.6'
 
 stages:
-  - install
   - test
   - name: deploy
     if: "(tag IS present) AND (branch = master)"
 
+
+install:
+  - make install-travis
+
 job:
   include:
-  - stage: install
-    script: make install-travis
   - stage: test
     script: make test
   - stage: deploy
