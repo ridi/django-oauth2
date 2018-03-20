@@ -1,5 +1,6 @@
-
 # RIDI-Django-OAuth2-Resource
+[![Build Status](https://travis-ci.org/ridi/ridi-django-oauth2-resource.svg?branch=master)](https://travis-ci.org/ridi/ridi-django-oauth2-resource)
+
 
 ## Introduction
 - OAuth2 Resource 서버를 구현하기 위한 Django용 라이브러리입니다.
@@ -40,4 +41,3 @@ RIDI_OAUTH2_TOKEN_URL: 'https://{auth_server_host}/oauth2/token/'
 ## TODO
 
 - Write Docs
-- Travis CI

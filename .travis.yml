@@ -1,0 +1,23 @@
+language: python
+python:
+  - '3.6'
+
+stages:
+  - test
+  - name: deploy
+    if: "(tag IS present) AND (branch = master)"
+
+jobs:
+  include:
+  - stage: test
+    before_script: make install-travis
+    script: make lint
+    script: make test
+
+  - stage: deploy
+    script: skip
+    deploy:
+      provider: pypi
+      user: junglekim
+      password:
+        secure: r9Rs4Q2nETMoQNXOHAkn5BzjCEXpAScDPsN20m6d6yu0vZFkaSllblA0ZuQq/50F6ABuuk4gEzTPH+DKuLv4nGux1yIYDDkzEwMtvzN29eMytxzPKNV+jkrKytMQntK3iszJAk72WhzcLrsjBiRUjnUTvPAQgLQnvCOfS3Shl6tb3LmoosQggX9chiw/O+meeRVXxgQG0k9EvanH/oyT4pWHWLM0hh6FNcxsBi8LWXWn8XZx9OWTPanHFJpKMuFyE5c8OBjN54+zrMDgVZaUxWZumpFRxJsw4KGpsKqiYfVvOUi7tRcixLj5tYWdaj0S6Diq9JFKVGoxc8epzKBa//iowyEP9UGXQ0m4MvUdjyEc5MU9lM/6a6R+TEbGwfvBlB9MoIz1mfrqPWN+6wmrC0TajaffaeAkbrdAiNlYSCQTotVDus0gDF1KCNpag40BoB1vBtjn3cArLgyCiTRuJWGu4ikCZid/5SkFAZnG7SJIM5leWaJtxcvFzmbL+kwHxnQkfy19L3o8le5SJ17ALugQYeCGsbuh8W5ANGvBpvO0WnVSt3NI+xLv7FSPL2DS49zq4HjYCJ3oYWDa1vVv0/NbEjxVKf/hZBGeND0J3jMSgIqhhesX6MKTu6lI1adp6eYgI651O9mlpzAhtojYZUkhMB5fNKc/i96ulJ2qhGg=

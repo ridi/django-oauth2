@@ -39,6 +39,9 @@ class JwtIntrospector(BaseIntrospector):
 
     @classmethod
     def _split_scopes(cls, payload: typing.Dict) -> typing.Dict:
+        if payload.get('scope', None) is None:
+            return payload
+
         if isinstance(payload['scope'], list):
             return payload
 
