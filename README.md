@@ -41,4 +41,3 @@ RIDI_OAUTH2_TOKEN_URL: 'https://{auth_server_host}/oauth2/token/'
 ## TODO
 
 - Write Docs
-- Travis CI
