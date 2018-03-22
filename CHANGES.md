@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.0.4 (Mar 22nd 2018)
+------------------
+- Change primary field type in RidiUser
+- Implement __str__ in RidiUser
+
 0.0.3 (Mar 20th 2018)
 ------------------
 - Rewrite code structure in ridi_oauth2 package.
