@@ -5,7 +5,7 @@ from ridi_django_oauth2_resource.managers import RidiUserManager
 
 
 class RidiUser(AbstractBaseUser):
-    u_idx = models.AutoField(primary_key=True, editable=False, verbose_name='u_idx')
+    u_idx = models.IntegerField(primary_key=True, editable=False, verbose_name='u_idx')
 
     USERNAME_FIELD = 'u_idx'
 
