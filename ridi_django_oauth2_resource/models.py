@@ -15,3 +15,6 @@ class RidiUser(AbstractBaseUser):
         db_table = 'ridi_user'
         verbose_name = '사용자 계정'
         verbose_name_plural = '사용자 계정 리스트'
+
+    def __str__(self):
+        return str(self.get_username())
