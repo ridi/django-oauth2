@@ -5,10 +5,7 @@ help:
 
 # Install
 install-dev:
-	@pip3.6 install -r requirements/dev.txt
-
-install-travis:
-	@pip3.6 install -r requirements/test.txt
+	@pip3.6 install -r requirements/development.txt
 
 # Test
 lint:

@@ -13,12 +13,10 @@ Changelog
 - Add migrations about RidiUser Model
 - Configure travis
 
-
 0.0.2 (Mar 16th 2018)
 ------------------
 ### Fix
 - Fix login_required Decorator
-
 
 0.0.1 (Mar 9th 2018)
 ------------------

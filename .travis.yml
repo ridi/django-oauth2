@@ -10,7 +10,7 @@ stages:
 jobs:
   include:
   - stage: test
-    before_script: make install-travis
+    before_script: make install-dev
     script: make lint
     script: make test
 
