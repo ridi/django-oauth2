@@ -6,7 +6,6 @@ from ridi_oauth2.introspector.dtos import JwtInfo
 class _Settings:
     JWT_SECRET_NAME = 'RIDI_OAUTH2_JWT_SECRET'
     JWT_ALGORITHM_NAME = 'RIDI_OAUTH2_JWT_ALGORITHM'
-    JWT_EXPIRE_MARGIN_NAME = 'RIDI_OAUTH2_JWT_EXPIRE_MARGIN'
 
     COOKIE_DOMAIN = 'RIDI_OAUTH2_COOKIE_DOMAIN'
     ACCESS_TOKEN_COOKIE_KEY = 'RIDI_OAUTH2_ACCESS_TOKEN_COOKIE_KEY'
@@ -15,7 +14,6 @@ class _Settings:
 
 class _Default:
     JWT_ALGORITHM = 'HS256'
-    JWT_EXPIRE_MARGIN = 500
 
     COOKIE_DOMAIN = 'ridibooks.com'
     ACCESS_TOKEN_COOKIE_KEY = "ridi-at"
@@ -25,11 +23,8 @@ class _Default:
 # JwtInfo
 _RIDI_OAUTH2_JWT_SECRET = getattr(settings, _Settings.JWT_SECRET_NAME)
 _RIDI_OAUTH2_JWT_ALGORITHM = getattr(settings, _Settings.JWT_ALGORITHM_NAME, _Default.JWT_ALGORITHM)
-_RIDI_OAUTH2_JWT_EXPIRE_MARGIN = getattr(settings, _Settings.JWT_EXPIRE_MARGIN_NAME, _Default.JWT_EXPIRE_MARGIN)
 
-_JWT_INFO = JwtInfo(
-    secret=_RIDI_OAUTH2_JWT_SECRET, algorithm=_RIDI_OAUTH2_JWT_ALGORITHM, expire_margin=_RIDI_OAUTH2_JWT_EXPIRE_MARGIN
-)
+_JWT_INFO = JwtInfo(secret=_RIDI_OAUTH2_JWT_SECRET, algorithm=_RIDI_OAUTH2_JWT_ALGORITHM)
 
 # Cookie
 _RIDI_COOKIE_DOMAIN = getattr(settings, _Settings.COOKIE_DOMAIN, _Default.COOKIE_DOMAIN)
