@@ -18,9 +18,7 @@ class JwtIntrospector(BaseIntrospector):
 
     def introspect(self) -> typing.Dict:
         try:
-            payload = jwt.decode(
-                jwt=self.access_token, key=self._jwt_info.secret, algorithms=[self._jwt_info.algorithm], leeway=self._jwt_info.expire_margin
-            )
+            payload = jwt.decode(jwt=self.access_token, key=self._jwt_info.secret, algorithms=[self._jwt_info.algorithm])
         except jwt.exceptions.ExpiredSignatureError:
             raise ExpireTokenException
         except jwt.exceptions.DecodeError:

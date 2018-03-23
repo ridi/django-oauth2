@@ -1,14 +1,11 @@
 import typing
 from datetime import datetime
 
-DEFAULT_EXPIRE_MARGIN = 60 * 5  # second
-
 
 class JwtInfo:
-    def __init__(self, secret: str, algorithm: str, expire_margin: int=DEFAULT_EXPIRE_MARGIN):
+    def __init__(self, secret: str, algorithm: str):
         self._secret = secret
         self._algorithm = algorithm
-        self._expire_margin = expire_margin
 
     @property
     def secret(self) -> str:
@@ -17,10 +14,6 @@ class JwtInfo:
     @property
     def algorithm(self) -> str:
         return self._algorithm
-
-    @property
-    def expire_margin(self) -> int:
-        return self._expire_margin
 
 
 class AccessTokenInfo:
