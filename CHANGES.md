@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.6 (Apr 2nd 2018)
+------------------
+- Test travis deploy
+
 0.0.5 (Mar 23th 2018)
 ------------------
 - Remove `expire_margin`
