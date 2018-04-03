@@ -16,16 +16,16 @@ SETTINGS_DICT = {
             'NAME': ':memory:'
         }
     },
-    'AUTH_USER_MODEL': 'ridi_django_oauth2_resource.RidiUser',
+    'AUTH_USER_MODEL': 'ridi_django_oauth2.RidiUser',
     'INSTALLED_APPS': [
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sites',
-        'ridi_django_oauth2_resource',
+        'ridi_django_oauth2',
         'tests',
     ],
     'MIDDLEWARE_CLASSES': (
-        'ridi_django_oauth2_resource.middlewares.AuthenticationMiddleware',
+        'ridi_django_oauth2.middlewares.AuthenticationMiddleware',
     ),
     'RIDI_OAUTH2_JWT_SECRET': 'dummy_jwt_secret',
     'RIDI_ridi_oauth2_ID': 'dummy_client_id',

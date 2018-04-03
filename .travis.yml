@@ -5,7 +5,7 @@ python:
 stages:
   - test
   - name: deploy
-    if: (tag IS present) AND (repo = ridi/ridi-django-oauth2-resource)
+    if: (tag IS present) AND (repo = ridi/django-oauth2)
 
 jobs:
   include:
@@ -22,5 +22,5 @@ jobs:
       password:
         secure: "qgRgoqfrXnnw70I7j2jpNAQhth/1vNRsQ3CHwdGrR3FUPRn4x+0aXvC7fMS7C49XS9FH47hoGxCzDRrXb+ve5KuVG6OOf1q00Vkt9QvR9I+xptQ7O/pMudncQliuaguquukMb2G/WIo+IkUtcALd/KePQSeafUF+Iq4YFU5r+si5CKMk8Ud7fUSOsLJyYIEse7srxjaOM39Ajnz9QaLz3nYPAvG0CYNapWRjuJpzPKoVMyE/wwRDrNcKv03J++D+pRg8zXpOJ3X703vVnQlD2aeI3IRP2AI57cNNYdcKLJthLMaNDl8jNpKRt/OFB2LBxQSozA9JnjnsB2n+CMRMvBV7hboPRV4vnAZKTwjDcHl9K1mfbBcSb5xqi3Hj8nKyC7OBfHv1F1aXL+o8FbqHKLpD3+ji3vjrYW78mPKNWBNbUBUusN4QSg+rMJDcqQsr/3wAk9QAfzKsoFYgYw1L7zyBBL//al66SVtbScYoYnfkGVZfRrKXd679XBYnDdhF6LZokhPTpjY1lS/ExLIhNIsh7kPhjy1rYHyLlF/1dJ6um5x5sc3vLHJRIogiwyezOJXsjoa+oJFr1Q+PnSpBWdm4Coho4Sv/e7BcuJfCt7yHr8c/hdrvG4UZqH0C+5xPqf3HQcmDWxQdrvSi7paWwcMSkHVXZHOZShApS490gOc="
       on:
-        repo: ridi/ridi-django-oauth2-resource
+        repo: ridi/django-oauth2
         tags: true

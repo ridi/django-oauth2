@@ -9,7 +9,7 @@ install-dev:
 
 # Test
 lint:
-	@python3.6 $(shell which pylint)  ./ridi_oauth2/ ./ridi_django_oauth2_resource/ --rcfile=.pylintrc && flake8
+	@python3.6 $(shell which pylint)  ./ridi_oauth2/ ./ridi_django_oauth2/ --rcfile=.pylintrc && flake8
 
 test:
 	@python3.6 runtests.py

@@ -7,9 +7,9 @@ with open('requirements/base.txt') as f:
 
 
 setup(
-    name='ridi-django-oauth2-resource',
+    name='ridi-django-oauth2',
     version=version,
-    url='https://github.com/ridi/ridi-django-oauth2-resource',
+    url='https://github.com/ridi/django-oauth2',
     license='MIT',
     description='RIDI Django OAuth2 Library',
     keywords=['oauth2', 'oauth2-resource', 'ridi', 'ridibooks'],
