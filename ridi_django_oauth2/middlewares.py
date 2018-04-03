@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.utils.deprecation import MiddlewareMixin
 
-from ridi_django_oauth2_resource.utils.token import get_token_from_cookie, get_token_info
+from ridi_django_oauth2.utils.token import get_token_from_cookie, get_token_info
 
 
 class AuthenticationMiddleware(MiddlewareMixin):

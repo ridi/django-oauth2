@@ -1,6 +1,6 @@
 import typing
 
-from ridi_django_oauth2_resource.config import RidiOAuth2Config
+from ridi_django_oauth2.config import RidiOAuth2Config
 
 
 def generate_cookie(access_token: str) -> typing.Dict:

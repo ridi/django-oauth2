@@ -2,7 +2,7 @@ import typing
 
 from django.http import HttpRequest
 
-from ridi_django_oauth2_resource.config import RidiOAuth2Config
+from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException

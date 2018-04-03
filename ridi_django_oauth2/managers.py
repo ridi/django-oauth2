@@ -1,6 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 
-from ridi_django_oauth2_resource.exceptions import ImpossibleSetSuperuserException
+from ridi_django_oauth2.exceptions import ImpossibleSetSuperuserException
 
 
 class RidiUserManager(BaseUserManager):

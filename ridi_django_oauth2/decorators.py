@@ -2,7 +2,7 @@ import typing
 
 from django.http import HttpResponse, HttpResponseForbidden
 
-from ridi_django_oauth2_resource.response import HttpUnauthorizedResponse
+from ridi_django_oauth2.response import HttpUnauthorizedResponse
 from ridi_oauth2.resource.scope_checker import ScopeChecker
 
 RESPONSE_HANDLER_TYPE = typing.Optional[typing.Callable]

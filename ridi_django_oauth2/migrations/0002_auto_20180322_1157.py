@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ridi_django_oauth2_resource', '0001_initial'),
+        ('ridi_django_oauth2', '0001_initial'),
     ]
 
     operations = [
