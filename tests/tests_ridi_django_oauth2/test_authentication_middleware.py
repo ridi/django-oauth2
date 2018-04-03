@@ -6,9 +6,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 
-from ridi_django_oauth2_resource.config import RidiOAuth2Config
-from ridi_django_oauth2_resource.middlewares import AuthenticationMiddleware
-from ridi_django_oauth2_resource.response import HttpUnauthorizedResponse
+from ridi_django_oauth2.config import RidiOAuth2Config
+from ridi_django_oauth2.middlewares import AuthenticationMiddleware
+from ridi_django_oauth2.response import HttpUnauthorizedResponse
 
 
 class AuthenticationMiddlewareTestCase(TestCase):

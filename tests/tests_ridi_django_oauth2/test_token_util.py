@@ -4,8 +4,8 @@ from unittest.mock import Mock
 import jwt
 from django.test import TestCase
 
-from ridi_django_oauth2_resource.config import RidiOAuth2Config
-from ridi_django_oauth2_resource.utils.token import get_token_from_cookie, get_token_info
+from ridi_django_oauth2.config import RidiOAuth2Config
+from ridi_django_oauth2.utils.token import get_token_from_cookie, get_token_info
 
 
 class TokenUtilTestCase(TestCase):
