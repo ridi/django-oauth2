@@ -20,7 +20,7 @@ jobs:
       provider: pypi
       user: ridi
       password:
-        secure: "qgRgoqfrXnnw70I7j2jpNAQhth/1vNRsQ3CHwdGrR3FUPRn4x+0aXvC7fMS7C49XS9FH47hoGxCzDRrXb+ve5KuVG6OOf1q00Vkt9QvR9I+xptQ7O/pMudncQliuaguquukMb2G/WIo+IkUtcALd/KePQSeafUF+Iq4YFU5r+si5CKMk8Ud7fUSOsLJyYIEse7srxjaOM39Ajnz9QaLz3nYPAvG0CYNapWRjuJpzPKoVMyE/wwRDrNcKv03J++D+pRg8zXpOJ3X703vVnQlD2aeI3IRP2AI57cNNYdcKLJthLMaNDl8jNpKRt/OFB2LBxQSozA9JnjnsB2n+CMRMvBV7hboPRV4vnAZKTwjDcHl9K1mfbBcSb5xqi3Hj8nKyC7OBfHv1F1aXL+o8FbqHKLpD3+ji3vjrYW78mPKNWBNbUBUusN4QSg+rMJDcqQsr/3wAk9QAfzKsoFYgYw1L7zyBBL//al66SVtbScYoYnfkGVZfRrKXd679XBYnDdhF6LZokhPTpjY1lS/ExLIhNIsh7kPhjy1rYHyLlF/1dJ6um5x5sc3vLHJRIogiwyezOJXsjoa+oJFr1Q+PnSpBWdm4Coho4Sv/e7BcuJfCt7yHr8c/hdrvG4UZqH0C+5xPqf3HQcmDWxQdrvSi7paWwcMSkHVXZHOZShApS490gOc="
+        secure: "XXYh4s2v5qq9XMowMKs3bLfnCWzZWiEuMea1IS1Po+lq8RJsHIRCheBmA0mcPFIRoC3+VOcrN0lstxdbWfp76JEjoO53278xU53ETYt7ncvHZ0fyFMb9aEFFi/qHQ6R+0O9RRzF9K+ArxvPQTT7MB5zyd87HxehF4pHm/PSgInoUyBNtHAPBkC3BMfbMPoWNHIgJzGnT00BACZfLCmxjkFChMoMoeiRrSuS6b6xE9B3t13OlntWtNt1OZgHKOlkcHNwsorrsI5Svmd5dpDLfyBse4kwjDrw6jgNoA80dw1GCPgtedrzFgfNsMmPMGWGyS64WLPS0YKtnXkThfGos/JUMObKCj9IFur/Ml6jMAVo8+j5WptGBJPOWKmbhiUClr1DuxILTj3Sk05cx0uiqFG43JFW+Ml43uosd7IpdcWA1/xnjE8qG42fkIZ0YXpdXR8cajjQ6FIOSq+qY5CChOgcgNEZZpNIJMaCIsSnmUPKDKnt4qSuahti++3JanKIWrW+m6bmsMWGLCgAFlUZl3ljSkHRZsT43ZfHf0h/Kktg7t3P+GJPpZYZtPtILXdNDs2H36fQYmgLswWQyoCu9hBGrYUUEdEuxCYxFecGNd+w7RIY6gAVAlqCIW7eVEi14uLmKMvzskQaPofq49Dw/7ZST9onumyLDk3NML30cIYg="
       on:
         repo: ridi/django-oauth2
         tags: true
