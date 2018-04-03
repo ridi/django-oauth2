@@ -1,5 +1,5 @@
-# RIDI-Django-OAuth2-Resource
-[![Build Status](https://travis-ci.org/ridi/ridi-django-oauth2-resource.svg?branch=master)](https://travis-ci.org/ridi/ridi-django-oauth2-resource)
+# ridi-django-oauth2
+[![Build Status](https://travis-ci.org/ridi/ridi-django-oauth2.svg?branch=master)](https://travis-ci.org/ridi/ridi-django-oauth2)
 
 
 ## Introduction
