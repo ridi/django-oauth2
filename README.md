@@ -1,7 +1,6 @@
 # ridi-django-oauth2
 [![Build Status](https://travis-ci.org/ridi/django-oauth2.svg?branch=master)](https://travis-ci.org/ridi/django-oauth2)
 
-
 ## Introduction
 - OAuth2 Resource 서버를 구현하기 위한 Django용 라이브러리입니다.
     - 해당 라이브러리는 리디의 OAuth2 Resource 서버 규칙에 따라 작성 되었습니다.
