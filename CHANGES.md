@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.7 (Apr 3th 2018)
+------------------
+- Change package name
+
 0.0.6 (Apr 2nd 2018)
 ------------------
 - Test travis deploy
