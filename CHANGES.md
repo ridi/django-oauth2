@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.8 (Apr 6th 2018)
+------------------
+- Support Django Rest Framework
+
 0.0.7 (Apr 3th 2018)
 ------------------
 - Change package name
