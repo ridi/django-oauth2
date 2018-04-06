@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.9 (Apr 6th 2018)
+------------------
+- Update requirements
+
 0.0.8 (Apr 6th 2018)
 ------------------
 - Support Django Rest Framework
