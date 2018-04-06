@@ -34,6 +34,14 @@ RIDI_OAUTH2_CLIENT_SECRET = 'this-is-client-secret'
 
 RIDI_OAUTH2_AUTHORIZATION_URL = 'https://{auth_server_host}/oauth2/authorize/'
 RIDI_OAUTH2_TOKEN_URL: 'https://{auth_server_host}/oauth2/token/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'ridi_django_oauth2.rest_framework.authentication.OAuth2Authentication',
+    )
+}
+
 ```
 
 
