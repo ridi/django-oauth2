@@ -1,5 +1,10 @@
 Changelog
 =========
+0.0.10 (Apr 6th 2018)
+------------------
+- Add missing file for rest_framework
+    - `__init__.py`
+
 0.0.9 (Apr 6th 2018)
 ------------------
 - Update requirements
