@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.11 (Apr 17th 2018)
+------------------
+- Change dependency version
+
 0.0.10 (Apr 6th 2018)
 ------------------
 - Add missing file for rest_framework
