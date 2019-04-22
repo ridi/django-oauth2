@@ -26,6 +26,10 @@ class LoginRequireTestCase(TestCase):
             'scope': 'all'
         }
 
+        self.headers = {
+            'kid': '0',
+        }
+
         self.dummy_view = login_required()(MagicMock(return_value=HttpResponse(content='success')))
         self.custom_dummy_view = login_required(response_handler=response_handler)(MagicMock(return_value=HttpResponse(content='success')))
 
@@ -51,7 +55,9 @@ class LoginRequireTestCase(TestCase):
     def test_not_exists_token_info(self):
         request = Mock()
         request.COOKIES = {
-            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(payload=self.jwt_payload, key='dummy_jwt_secret').decode(),
+            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(
+                self.jwt_payload, 'dummy_jwt_secret', headers=self.headers
+            ).decode(),
         }
         self.middleware.process_request(request)
 
@@ -66,7 +72,9 @@ class LoginRequireTestCase(TestCase):
     def test_login(self):
         request = Mock()
         request.COOKIES = {
-            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(payload=self.jwt_payload, key='dummy_jwt_secret').decode(),
+            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(
+                self.jwt_payload, 'dummy_jwt_secret', headers=self.headers
+            ).decode(),
         }
         self.middleware.process_request(request)
 
@@ -95,6 +103,10 @@ class ScopeRequireTestCase(TestCase):
             'scope': 'user_info'
         }
 
+        self.headers = {
+            'kid': '0',
+        }
+
         self.dummy_view1 = scope_required(required_scopes=['user_info'])(MagicMock(return_value=HttpResponse(content='success1')))
         self.dummy_view2 = scope_required(required_scopes=[('user_info', 'purchase')])(
             MagicMock(return_value=HttpResponse(content='success2'))
@@ -106,7 +118,9 @@ class ScopeRequireTestCase(TestCase):
     def test_all_scope(self):
         request = Mock()
         request.COOKIES = {
-            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(payload=self.jwt_payload, key='dummy_jwt_secret').decode(),
+            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(
+                self.jwt_payload, 'dummy_jwt_secret', headers=self.headers
+            ).decode(),
         }
         self.middleware.process_request(request)
 
@@ -126,7 +140,9 @@ class ScopeRequireTestCase(TestCase):
     def test_restriction_scope(self):
         request = Mock()
         request.COOKIES = {
-            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(payload=self.jwt_loose_payload, key='dummy_jwt_secret').decode(),
+            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(
+                self.jwt_loose_payload, 'dummy_jwt_secret', headers=self.headers
+            ).decode(),
         }
         self.middleware.process_request(request)
 
@@ -145,7 +161,9 @@ class ScopeRequireTestCase(TestCase):
     def test_restriction_scope_with_custom_response(self):
         request = Mock()
         request.COOKIES = {
-            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(payload=self.jwt_loose_payload, key='dummy_jwt_secret').decode(),
+            RidiOAuth2Config.get_access_token_cookie_key(): jwt.encode(
+                self.jwt_loose_payload, 'dummy_jwt_secret', headers=self.headers
+            ).decode(),
         }
         self.middleware.process_request(request)
 

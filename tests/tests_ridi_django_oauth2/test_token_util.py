@@ -29,7 +29,10 @@ class TokenUtilTestCase(TestCase):
             'client_id': 'asfeih29snv8as213i',
             'scope': 'all'
         }
-        valid_token = jwt.encode(payload=payload, key='dummy_jwt_secret').decode()
+        headers = {
+            'kid': '0',
+        }
+        valid_token = jwt.encode(payload=payload, key='dummy_jwt_secret', headers=headers).decode()
 
         token_info = get_token_info(token=valid_token)
 

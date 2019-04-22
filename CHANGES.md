@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.12 (Apr 23th 2019)
+------------------
+- Support select jwt sign key by kid
+
 0.0.11 (Apr 17th 2018)
 ------------------
 - Change dependency version
