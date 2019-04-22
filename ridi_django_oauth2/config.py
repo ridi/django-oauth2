@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict
 
 from django.conf import settings
 
@@ -21,9 +21,10 @@ class _Default:
 
 # JwtInfo
 _RIDI_OAUTH2_JWT_SECRETS = getattr(settings, _Settings.JWT_SECRETS)
-_JWT_INFOS = [
-    JwtInfo(_RIDI_OAUTH2_JWT_SECRET['secret'], _RIDI_OAUTH2_JWT_SECRET['alg']) for _RIDI_OAUTH2_JWT_SECRET in _RIDI_OAUTH2_JWT_SECRETS
-]
+_JWT_INFOS = {
+    (_RIDI_OAUTH2_JWT_SECRET['kid'], JwtInfo(_RIDI_OAUTH2_JWT_SECRET['secret'], _RIDI_OAUTH2_JWT_SECRET['alg']))
+    for _RIDI_OAUTH2_JWT_SECRET in _RIDI_OAUTH2_JWT_SECRETS
+}
 
 # Cookie
 _RIDI_COOKIE_DOMAIN = getattr(settings, _Settings.COOKIE_DOMAIN, _Default.COOKIE_DOMAIN)
@@ -33,7 +34,7 @@ _RIDI_REFRESH_TOKEN_COOKIE_KEY = getattr(settings, _Settings.REFRESH_TOKEN_COOKI
 
 class RidiOAuth2Config:
     @staticmethod
-    def get_jwt_infos() -> List[JwtInfo]:
+    def get_jwt_infos() -> Dict[str, JwtInfo]:
         return _JWT_INFOS
 
     @staticmethod

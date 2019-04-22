@@ -29,6 +29,7 @@ SETTINGS_DICT = {
     ),
     'RIDI_OAUTH2_JWT_SECRETS': [
         {
+            'kid': '0',
             'secret': 'dummy_jwt_secret',
             'alg': 'HS256'
         },
