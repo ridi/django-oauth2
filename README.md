@@ -28,7 +28,6 @@ AUTH_USER_MODEL = 'ridi_django_oauth2.RidiUser'
 
 
 # RIDI Setting
-RIDI_OAUTH2_JWT_SECRET = 'this-is-jwt-secret'
 RIDI_OAUTH2_JWT_SECRETS = [
     {
         'secret': 'this-is-hs256-key',
