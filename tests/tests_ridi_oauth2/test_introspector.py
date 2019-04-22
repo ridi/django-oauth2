@@ -14,18 +14,21 @@ class JwtIntrospectorTestCase(unittest.TestCase):
     def setUp(self):
         self.secret = generate_random_str(chars=string.ascii_letters + string.digits + string.punctuation)
         self.alg = 'HS256'
+        self.headers = {
+            'kid': '0',
+        }
 
         self.claim = {
             "sub": "testuser",
             "exp": int(time.time()) + 60 * 60,
         }
-        self.token = jwt.encode(self.claim, self.secret, algorithm=self.alg)
+        self.token = jwt.encode(self.claim, self.secret, self.alg, self.headers)
 
         self.invalid_claim = {
             "sub": "testuser",
             "exp": int(time.time()) - 60 * 60,
         }
-        self.invalid_token = jwt.encode(self.invalid_claim, self.secret, algorithm=self.alg)
+        self.invalid_token = jwt.encode(self.invalid_claim, self.secret, self.alg, self.headers)
 
     def test_introspect(self):
         jwt_info = JwtInfo(secret=self.secret, algorithm=self.alg)

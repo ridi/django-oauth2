@@ -14,6 +14,9 @@ from ridi_django_oauth2.response import HttpUnauthorizedResponse
 class AuthenticationMiddlewareTestCase(TestCase):
     def setUp(self):
         self.middleware = AuthenticationMiddleware()
+        self.headers = {
+            'kid': '0',
+        }
 
         self.valid_token = jwt.encode(payload={
             'sub': 'testuser',
@@ -21,13 +24,13 @@ class AuthenticationMiddlewareTestCase(TestCase):
             'exp': int(time.time()) + 60 * 60,
             'client_id': 'asfeih29snv8as213i',
             'scope': 'all'
-        }, key='dummy_jwt_secret').decode()
+        }, key='dummy_jwt_secret', headers=self.headers).decode()
 
         self.loose_token = jwt.encode(payload={
             'sub': 'testuser',
             'u_idx': 123123,
             'exp': int(time.time()) + 60 * 60,
-        }, key='dummy_jwt_secret').decode()
+        }, key='dummy_jwt_secret', headers=self.headers).decode()
 
         self.expire_token = jwt.encode(payload={
             'sub': 'testuser',
@@ -35,7 +38,7 @@ class AuthenticationMiddlewareTestCase(TestCase):
             'exp': int(time.time()) - 60 * 60,
             'client_id': 'asfeih29snv8as213i',
             'scope': 'all'
-        }, key='dummy_jwt_secret').decode()
+        }, key='dummy_jwt_secret', headers=self.headers).decode()
 
     def test_login_and_not_expire(self):
         request = Mock()
