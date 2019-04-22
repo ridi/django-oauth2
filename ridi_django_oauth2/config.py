@@ -21,10 +21,10 @@ class _Default:
 
 # JwtInfo
 _RIDI_OAUTH2_JWT_SECRETS = getattr(settings, _Settings.JWT_SECRETS)
-_JWT_INFOS = {
+_JWT_INFOS = dict([
     (_RIDI_OAUTH2_JWT_SECRET['kid'], JwtInfo(_RIDI_OAUTH2_JWT_SECRET['secret'], _RIDI_OAUTH2_JWT_SECRET['alg']))
     for _RIDI_OAUTH2_JWT_SECRET in _RIDI_OAUTH2_JWT_SECRETS
-}
+])
 
 # Cookie
 _RIDI_COOKIE_DOMAIN = getattr(settings, _Settings.COOKIE_DOMAIN, _Default.COOKIE_DOMAIN)
