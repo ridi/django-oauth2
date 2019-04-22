@@ -29,6 +29,16 @@ AUTH_USER_MODEL = 'ridi_django_oauth2.RidiUser'
 
 # RIDI Setting
 RIDI_OAUTH2_JWT_SECRET = 'this-is-jwt-secret'
+RIDI_OAUTH2_JWT_SECRETS = [
+    {
+        'secret': 'this-is-hs256-key',
+        'alg': 'HS256',
+    },
+    {
+        'secret': 'this-is-rs256-public-key',
+        'alg': 'RS256',
+    },
+]
 RIDI_OAUTH2_CLIENT_ID = 'this-is-client-id'
 RIDI_OAUTH2_CLIENT_SECRET = 'this-is-client-secret'
 
@@ -41,7 +51,6 @@ REST_FRAMEWORK = {
         'ridi_django_oauth2.rest_framework.authentication.OAuth2Authentication',
     )
 }
-
 ```
 
 
