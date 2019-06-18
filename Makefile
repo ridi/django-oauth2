@@ -5,7 +5,7 @@ help:
 
 # Install
 install-dev:
-	@pip3.6 install -r requirements/development.txt
+	@pip3.6 install -U pip pipenv && pipenv install
 
 # Test
 lint:
