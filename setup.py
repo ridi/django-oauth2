@@ -1,10 +1,14 @@
 from setuptools import find_packages, setup
 
-version = '0.0.12'
+version = '0.0.13'
 
-with open('requirements/base.txt') as f:
-    install_requires = [line for line in f if line and not line.startswith('-')]
-
+# When the project is installed by pip, this is the specification that is used to install its dependencies.
+install_requires = [
+    "djangorestframework=>3.7.7",
+    "django=>2.2.1",
+    "PyJWT=>1.6.1",
+    "requests=>2.20.0",
+]
 
 setup(
     name='ridi-django-oauth2',
