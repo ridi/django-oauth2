@@ -4,10 +4,10 @@ version = '0.0.13'
 
 # When the project is installed by pip, this is the specification that is used to install its dependencies.
 install_requires = [
-    "djangorestframework=>3.7.7",
-    "django=>2.2.1",
-    "PyJWT=>1.6.1",
-    "requests=>2.20.0",
+    "djangorestframework>=3.7.7",
+    "django>=2.2.1",
+    "PyJWT>=1.6.1",
+    "requests>=2.20.0",
 ]
 
 setup(
