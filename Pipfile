@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"djangorestframework" = "==3.7.7"
+"django" = "==2.2.1"
+"PyJWT" = "==1.6.1"
+"requests" = "==2.20.0"
+
+[dev-packages]
+"flake8" = "*"
+"pylint" = "*"
+"requests-mock" = "==1.4.0"
+
+[requires]
+python_version = "3.6"

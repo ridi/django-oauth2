@@ -3,14 +3,18 @@ from typing import Dict
 import jwt
 
 from ridi_oauth2.introspector.dtos import AccessTokenInfo, JwtInfo
-from ridi_oauth2.introspector.exceptions import InvalidJwtSignatureException
+from ridi_oauth2.introspector.exceptions import InvalidJwtSignatureException, InvalidToken
 from ridi_oauth2.introspector.jwt_introspector import JwtIntrospector
 
 
 class JwtIntrospectHelper:
     @staticmethod
     def introspect(jwt_infos: Dict[str, JwtInfo], access_token: str) -> AccessTokenInfo:
-        unverified_header = jwt.get_unverified_header(access_token)
+        try:
+            unverified_header = jwt.get_unverified_header(access_token)
+        except jwt.InvalidTokenError:
+            raise InvalidToken
+
         kid = unverified_header.get('kid')
         if not kid:
             raise InvalidJwtSignatureException
