@@ -1,5 +1,9 @@
 Changelog
 =========
+0.0.15 (Aug 1st 2019)
+------------------
+- Add cryptography in package  
+
 0.0.12 (Apr 23th 2019)
 ------------------
 - Support select jwt sign key by kid
