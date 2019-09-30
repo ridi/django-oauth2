@@ -1,5 +1,3 @@
-
-
 class InvalidResponseException(Exception):
     pass
 
@@ -9,7 +7,7 @@ class NotSupportedGrantException(Exception):
 
 
 class OAuthFailureException(Exception):
-    def __init__(self, error_code: str, *args, description: str=None, error_uri: str=None):
+    def __init__(self, error_code: str, *args, description: str = None, error_uri: str = None):
         self._error_code = error_code
         self._description = description
         self._error_uri = error_uri
@@ -27,3 +25,7 @@ class OAuthFailureException(Exception):
     @property
     def error_uri(self) -> str:
         return self._error_uri
+
+
+class ServerException(Exception):
+    pass
