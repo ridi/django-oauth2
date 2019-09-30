@@ -17,13 +17,12 @@ def get_token_from_cookie(request: HttpRequest) -> TokenData:
 
 
 def get_token_info(token: str) -> typing.Optional[AccessTokenInfo]:
-    jwt_infos = RidiOAuth2Config.get_jwt_infos()
+    token_info = None
     try:
-        token_info = JwtIntrospectHelper.introspect(jwt_infos, token)
+        token_info = JwtIntrospectHelper.introspect(RidiOAuth2Config.get_internal_key_auth_info(), token)
 
     except (KeyError, ExpireTokenException, InvalidJwtSignatureException, InvalidToken):
-        token_info = None
-
+        pass
     return token_info
 
 

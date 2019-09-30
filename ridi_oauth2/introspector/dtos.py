@@ -1,7 +1,7 @@
 import typing
 from datetime import datetime
 
-
+# TODO : 제거
 class JwtInfo:
     def __init__(self, secret: str, algorithm: str):
         self._secret = secret

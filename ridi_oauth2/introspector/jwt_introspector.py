@@ -1,4 +1,3 @@
-
 import typing
 
 import jwt
@@ -9,6 +8,7 @@ from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwt
 from .base import BaseIntrospector
 
 
+# TODO 제거
 class JwtIntrospector(BaseIntrospector):
     _DEFAULT_SCOPE_DELIMITER = ' '
 

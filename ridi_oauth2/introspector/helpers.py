@@ -1,15 +1,17 @@
 from typing import Dict
 
 import jwt
+from jwt import InvalidTokenError
+from jwt.exceptions import InvalidKeyError
 
-from ridi_oauth2.introspector.dtos import AccessTokenInfo, JwtInfo
+from ridi_oauth2.introspector.dtos import AccessTokenInfo
 from ridi_oauth2.introspector.exceptions import InvalidJwtSignatureException, InvalidToken
-from ridi_oauth2.introspector.jwt_introspector import JwtIntrospector
+from ridi_oauth2.introspector.key_api_helpers import KeyApiHelper
 
 
 class JwtIntrospectHelper:
     @staticmethod
-    def introspect(jwt_infos: Dict[str, JwtInfo], access_token: str) -> AccessTokenInfo:
+    def introspect(internal_key_auth_info: Dict, access_token: str) -> AccessTokenInfo:
         try:
             unverified_header = jwt.get_unverified_header(access_token)
         except jwt.InvalidTokenError:
@@ -19,15 +21,10 @@ class JwtIntrospectHelper:
         if not kid:
             raise InvalidJwtSignatureException
 
-        jwt_info = jwt_infos.get(kid)
-        if not jwt_info:
+        public_key = KeyApiHelper.get_public_key_by_kid(internal_key_auth_info, kid)
+        if not public_key:
             raise InvalidJwtSignatureException
-
-        introspector = JwtIntrospector(jwt_info=jwt_info, access_token=access_token)
-        result = introspector.introspect()
-
         try:
-            return AccessTokenInfo.from_dict(result)
-
-        except KeyError:
+            return jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
+        except [InvalidTokenError, InvalidKeyError]:
             raise InvalidJwtSignatureException
