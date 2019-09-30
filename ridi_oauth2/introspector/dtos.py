@@ -63,7 +63,7 @@ class KeyDto:
 
     @property
     def expires(self) -> datetime:
-        return self._json.get('expires')
+        return datetime.strptime(self._json.get('expires'), '%Y-%m-%dT%H:%M:%S')
 
     @property
     def public_key(self) -> str:
