@@ -55,3 +55,24 @@ class AccessTokenInfo:
             subject=dictionary['sub'], u_idx=dictionary['u_idx'], expire=dictionary['exp'], client_id=dictionary['client_id'],
             scope=dictionary['scope'],
         )
+
+
+class KeyDto:
+    def __init__(self, json):
+        self._json = json
+
+    @property
+    def expires(self) -> datetime:
+        return self._json.get('expires')
+
+    @property
+    def public_key(self) -> str:
+        return self._json.get('public_key')
+
+    @property
+    def kid(self) -> str:
+        return self._json.get('kid')
+
+    @property
+    def key_usage(self) -> str:
+        return self._json.get('key_usage')
