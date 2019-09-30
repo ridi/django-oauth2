@@ -76,3 +76,7 @@ class KeyDto:
     @property
     def key_usage(self) -> str:
         return self._json.get('key_usage')
+
+    @property
+    def is_expired(self) -> bool:
+        return self.expires < datetime.now()
