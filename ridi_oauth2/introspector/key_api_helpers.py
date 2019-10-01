@@ -53,7 +53,6 @@ class KeyApiHelper:
                 url=internal_key_auth_info.url,
                 headers=headers,
                 params={'client_id': internal_key_auth_info.client_id},
-                verify=False
             )
             return cls._process_response(response=response).get('keys')
         except RequestException:
