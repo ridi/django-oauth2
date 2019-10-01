@@ -1,5 +1,11 @@
 Changelog
 =========
+0.0.16 (Oct 1st 2019)
+------------------
+- Change main logic to get public key from OAuth2 server
+    - to get public key, it sends request to OAuth2 server, and memorize that key until key expires.
+    - it makes able to adapt OAuth2 server's key changing dynamically and using multi key.  
+
 0.0.15 (Aug 1st 2019)
 ------------------
 - Add cryptography in package  
