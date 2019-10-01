@@ -1,20 +1,6 @@
 import typing
 from datetime import datetime
 
-# TODO : 제거
-class JwtInfo:
-    def __init__(self, secret: str, algorithm: str):
-        self._secret = secret
-        self._algorithm = algorithm
-
-    @property
-    def secret(self) -> str:
-        return self._secret
-
-    @property
-    def algorithm(self) -> str:
-        return self._algorithm
-
 
 class AccessTokenInfo:
     def __init__(self, subject: str, u_idx: int, expire: int, client_id: str, scope: typing.List):
