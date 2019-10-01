@@ -1,9 +1,8 @@
-from typing import Dict
-
 import jwt
 from jwt import InvalidTokenError
 from jwt.exceptions import InvalidKeyError
 
+from ridi_oauth2.client.dtos import KeyAuthInfo
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 from ridi_oauth2.introspector.exceptions import InvalidJwtSignatureException, InvalidToken
 from ridi_oauth2.introspector.key_api_helpers import KeyApiHelper
@@ -11,7 +10,7 @@ from ridi_oauth2.introspector.key_api_helpers import KeyApiHelper
 
 class JwtIntrospectHelper:
     @staticmethod
-    def introspect(internal_key_auth_info: Dict, access_token: str) -> AccessTokenInfo:
+    def introspect(internal_key_auth_info: KeyAuthInfo, access_token: str) -> AccessTokenInfo:
         try:
             unverified_header = jwt.get_unverified_header(access_token)
         except jwt.InvalidTokenError:

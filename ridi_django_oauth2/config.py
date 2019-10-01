@@ -1,6 +1,6 @@
-from typing import Dict
-
 from django.conf import settings
+
+from ridi_oauth2.client.dtos import KeyAuthInfo
 
 
 class _SettingKeyName:
@@ -28,8 +28,7 @@ _RIDI_COOKIE_DOMAIN = getattr(settings, _SettingKeyName.COOKIE_DOMAIN, _Default.
 _RIDI_ACCESS_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.ACCESS_TOKEN_COOKIE_KEY, _Default.ACCESS_TOKEN_COOKIE_KEY)
 _RIDI_REFRESH_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.REFRESH_TOKEN_COOKIE_KEY, _Default.REFRESH_TOKEN_COOKIE_KEY)
 
-# RIDI_OAUTH2_KEY_AUTH_INFO #TODO dto
-_RIDI_OAUTH2_KEY_AUTH_INFO = {
+_RIDI_OAUTH2_KEY_AUTH_INFO = KeyAuthInfo({
     'iss': getattr(settings, _SettingKeyName.INTERNAL_AUTH_ISS),
     'aud': getattr(settings, _SettingKeyName.INTERNAL_AUTH_AUD),
     'ttl_seconds': getattr(settings, _SettingKeyName.INTERNAL_AUTH_TTL_SECONDS),
@@ -37,12 +36,12 @@ _RIDI_OAUTH2_KEY_AUTH_INFO = {
     'url': getattr(settings, _SettingKeyName.INTERNAL_AUTH_URL),
     'secret': getattr(settings, _SettingKeyName.INTERNAL_AUTH_PRIVATE_KEY),
     'client_id': getattr(settings, _SettingKeyName.INTERNAL_AUTH_CLIENT_ID)
-}
+})
 
 
 class RidiOAuth2Config:
     @staticmethod
-    def get_internal_key_auth_info() -> Dict:
+    def get_internal_key_auth_info() -> KeyAuthInfo:
         return _RIDI_OAUTH2_KEY_AUTH_INFO
 
     @staticmethod
