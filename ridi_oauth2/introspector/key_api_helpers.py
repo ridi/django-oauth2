@@ -1,15 +1,13 @@
 from datetime import datetime, timedelta
-from http.client import HTTPException
-from json import JSONDecodeError
-from typing import Dict
+from typing import Dict, List
 
 import jwt
 import requests
-from requests import HTTPError, RequestException, Response
+from requests import RequestException, Response
 
 from ridi_oauth2.client.dtos import KeyAuthInfo
-from ridi_oauth2.client.exceptions import InvalidResponseException, ServerException
 from ridi_oauth2.introspector.dtos import KeyDto
+from ridi_oauth2.introspector.exceptions import InvalidPublicKey
 
 
 class KeyApiHelper:
@@ -18,9 +16,17 @@ class KeyApiHelper:
     @classmethod
     def get_public_key_by_kid(cls, internal_key_auth_info: KeyAuthInfo, kid: str):
         public_key_dto = cls._public_key_dtos.get(kid, None)
+
         if not public_key_dto or public_key_dto.is_expired:
-            cls._set_public_key_dtos_by_client_id(internal_key_auth_info)
+            keys = cls._get_valid_public_keys_by_client_id(internal_key_auth_info)
+            for key in keys:
+                cls._public_key_dtos.setdefault(key.get('kid'), KeyDto(key))
+
             public_key_dto = cls._public_key_dtos.get(kid, None)
+
+            if not public_key_dto:
+                raise InvalidPublicKey
+
         return public_key_dto.public_key
 
     @staticmethod
@@ -34,21 +40,13 @@ class KeyApiHelper:
 
     @staticmethod
     def _process_response(response: Response) -> Dict:
-        try:
-            response.raise_for_status()
-            return response.json()
-
-        except HTTPError as e:
-            raise HTTPException(origin_exception=e, content=e.response.content, status=e.response.status_code)
-
-        except (JSONDecodeError, TypeError):
-            raise InvalidResponseException(response.content)
+        response.raise_for_status()
+        return response.json()
 
     @classmethod
-    def _set_public_key_dtos_by_client_id(cls, internal_key_auth_info: KeyAuthInfo):
-        headers = {
-            'Authorization': f'Bearer {cls._generate_internal_auth_token(internal_key_auth_info)}'
-        }
+    def _get_valid_public_keys_by_client_id(cls, internal_key_auth_info: KeyAuthInfo) -> List[Dict]:
+        headers = {'Authorization': f'Bearer {cls._generate_internal_auth_token(internal_key_auth_info)}'}
+
         try:
             response = requests.request(
                 method='GET',
@@ -57,9 +55,6 @@ class KeyApiHelper:
                 params={'client_id': internal_key_auth_info.client_id},
                 verify=False
             )
-
+            return cls._process_response(response=response).get('keys')
         except RequestException:
-            raise ServerException
-
-        for key in cls._process_response(response=response).get('keys'):
-            cls._public_key_dtos.setdefault(key.get('kid'), KeyDto(key))
+            raise InvalidPublicKey

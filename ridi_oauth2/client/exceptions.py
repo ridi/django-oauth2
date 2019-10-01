@@ -25,7 +25,3 @@ class OAuthFailureException(Exception):
     @property
     def error_uri(self) -> str:
         return self._error_uri
-
-
-class ServerException(Exception):
-    pass

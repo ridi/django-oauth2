@@ -8,3 +8,7 @@ class ExpireTokenException(Exception):
 
 class InvalidToken(Exception):
     pass
+
+
+class InvalidPublicKey(Exception):
+    pass
