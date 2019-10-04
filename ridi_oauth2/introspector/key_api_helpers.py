@@ -5,6 +5,7 @@ import jwt
 import requests
 from requests import RequestException, Response
 
+from lib.decorators.retry import retry
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
 from ridi_oauth2.introspector.dtos import KeyDto
@@ -15,6 +16,7 @@ class KeyApiHelper:
     _public_key_dtos = {}
 
     @classmethod
+    @retry(retry_count=3, retriable_exceptions=(InvalidPublicKey,))
     def get_public_key_by_kid(cls, client_id: str, kid: str):
 
         public_key_dto = cls._public_key_dtos.get(kid, None)
