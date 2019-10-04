@@ -5,6 +5,7 @@ import jwt
 import requests
 from requests import RequestException, Response
 
+from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
 from ridi_oauth2.introspector.dtos import KeyDto
 from ridi_oauth2.introspector.exceptions import InvalidPublicKey
@@ -14,11 +15,12 @@ class KeyApiHelper:
     _public_key_dtos = {}
 
     @classmethod
-    def get_public_key_by_kid(cls, internal_key_auth_info: KeyAuthInfo, kid: str):
+    def get_public_key_by_kid(cls, client_id: str, kid: str):
+
         public_key_dto = cls._public_key_dtos.get(kid, None)
 
         if not public_key_dto or public_key_dto.is_expired:
-            keys = cls._get_valid_public_keys_by_client_id(internal_key_auth_info)
+            keys = cls._get_valid_public_keys_by_client_id(client_id)
             for key in keys:
                 cls._public_key_dtos.setdefault(key.get('kid'), KeyDto(key))
 
@@ -44,7 +46,8 @@ class KeyApiHelper:
         return response.json()
 
     @classmethod
-    def _get_valid_public_keys_by_client_id(cls, internal_key_auth_info: KeyAuthInfo) -> List[Dict]:
+    def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[Dict]:
+        internal_key_auth_info = RidiOAuth2Config.get_internal_key_auth_info()
         headers = {'Authorization': f'Bearer {cls._generate_internal_auth_token(internal_key_auth_info)}'}
 
         try:
@@ -52,7 +55,7 @@ class KeyApiHelper:
                 method='GET',
                 url=internal_key_auth_info.url,
                 headers=headers,
-                params={'client_id': internal_key_auth_info.client_id},
+                params={'client_id': client_id},
             )
             return cls._process_response(response=response).get('keys')
         except RequestException:

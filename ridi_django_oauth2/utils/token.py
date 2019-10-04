@@ -19,7 +19,7 @@ def get_token_from_cookie(request: HttpRequest) -> TokenData:
 def get_token_info(token: str) -> typing.Optional[AccessTokenInfo]:
     token_info = None
     try:
-        token_info = JwtIntrospectHelper.introspect(RidiOAuth2Config.get_internal_key_auth_info(), token)
+        token_info = JwtIntrospectHelper.introspect(token)
 
     except (KeyError, ExpireTokenException, InvalidJwtSignatureException, InvalidToken, InvalidPublicKey):
         pass
