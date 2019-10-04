@@ -4,7 +4,7 @@ from jwt.exceptions import InvalidKeyError
 
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
 from ridi_oauth2.introspector.exceptions import InvalidJwtSignatureException, InvalidToken
-from ridi_oauth2.introspector.key_api_helpers import KeyApiHelper
+from ridi_oauth2.introspector.key_handler import KeyHandler
 
 
 class JwtIntrospectHelper:
@@ -22,7 +22,7 @@ class JwtIntrospectHelper:
         if not kid or not client_id:
             raise InvalidJwtSignatureException
 
-        public_key = KeyApiHelper.get_public_key_by_kid(client_id, kid)
+        public_key = KeyHandler.get_public_key_by_kid(client_id, kid)
 
         try:
             payload = jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
