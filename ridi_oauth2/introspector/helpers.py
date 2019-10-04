@@ -25,5 +25,5 @@ class JwtIntrospectHelper:
         try:
             payload = jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
             return AccessTokenInfo.from_dict(payload)
-        except [InvalidTokenError, InvalidKeyError]:
+        except (InvalidTokenError, InvalidKeyError):
             raise InvalidJwtSignatureException
