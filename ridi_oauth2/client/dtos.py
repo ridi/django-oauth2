@@ -120,7 +120,3 @@ class KeyAuthInfo:
     @property
     def secret(self) -> str:
         return self._data.get('secret')
-
-    @property
-    def client_id(self) -> str:
-        return self._data.get('client_id')
