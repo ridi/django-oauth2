@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import TokenData
 from ridi_oauth2.introspector.dtos import AccessTokenInfo
-from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException, InvalidToken, InvalidPublicKey
+from ridi_oauth2.introspector.exceptions import ExpireTokenException, InvalidJwtSignatureException, InvalidToken
 from ridi_oauth2.introspector.helpers import JwtIntrospectHelper
 
 
@@ -21,7 +21,7 @@ def get_token_info(token: str) -> typing.Optional[AccessTokenInfo]:
     try:
         token_info = JwtIntrospectHelper.introspect(token)
 
-    except (KeyError, ExpireTokenException, InvalidJwtSignatureException, InvalidToken, InvalidPublicKey):
+    except (KeyError, ExpireTokenException, InvalidJwtSignatureException, InvalidToken):
         pass
     return token_info
 
