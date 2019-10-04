@@ -42,6 +42,7 @@ class KeyHandler:
         key_dtos = cls._public_key_dtos.get(client_id, {})
         for key in keys:
             key_dtos[key.kid] = key
+        cls._public_key_dtos[client_id] = key_dtos
 
     @staticmethod
     def _generate_internal_auth_token(internal_key_auth_info: KeyAuthInfo) -> str:
