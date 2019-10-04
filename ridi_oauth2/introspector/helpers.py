@@ -23,6 +23,7 @@ class JwtIntrospectHelper:
         public_key = KeyApiHelper.get_public_key_by_kid(internal_key_auth_info, kid)
 
         try:
-            return jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
+            payload = jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
+            return AccessTokenInfo.from_dict(payload)
         except [InvalidTokenError, InvalidKeyError]:
             raise InvalidJwtSignatureException
