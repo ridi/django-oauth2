@@ -16,10 +16,10 @@ class JwtIntrospectHelper:
         except jwt.InvalidTokenError:
             raise InvalidToken
 
-        kid = unverified_header.get('kid')
-        client_id = unverified_payload.get('client_id')
+        kid = unverified_header.get('kid', None)
+        client_id = unverified_payload.get('client_id', None)
 
-        if not kid:
+        if not kid or not client_id:
             raise InvalidJwtSignatureException
 
         public_key = KeyApiHelper.get_public_key_by_kid(client_id, kid)
