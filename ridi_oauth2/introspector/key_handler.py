@@ -55,9 +55,9 @@ class KeyHandler:
 
     @staticmethod
     def _process_response(response: Response) -> Dict:
-        if response.status_code > 499:
+        if response.status_code >= 500:
             raise AccountServerException
-        elif response.status_code > 399:
+        elif response.status_code >= 400:
             raise ClientRequestException
         return response.json()
 
