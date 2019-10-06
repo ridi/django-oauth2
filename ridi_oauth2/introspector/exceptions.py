@@ -14,7 +14,7 @@ class PublicKeyException(Exception):
     pass
 
 
-class InvalidPublicKey(PublicKeyException):
+class FailToLoadPublicKeyException(PublicKeyException):
     pass
 
 

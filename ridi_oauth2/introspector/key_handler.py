@@ -9,7 +9,7 @@ from lib.decorators.retry import RetryFailException, retry
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
 from ridi_oauth2.introspector.dtos import KeyDto
-from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, InvalidPublicKey, NotExistedKey
+from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey
 
 
 class KeyHandler:
@@ -24,7 +24,7 @@ class KeyHandler:
                 keys = cls._get_valid_public_keys_by_client_id(client_id)
                 cls._memorize_key_dtos(client_id, keys)
             except RetryFailException:
-                raise InvalidPublicKey
+                raise FailToLoadPublicKeyException
 
             public_key_dto = cls._get_memorized_key_dto(client_id, kid)
 
