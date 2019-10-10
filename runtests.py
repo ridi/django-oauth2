@@ -6,7 +6,6 @@ from django.conf import settings
 
 sys.path.append(os.path.abspath('./src'))
 
-
 SETTINGS_DICT = {
     'DEBUG': True,
     'USE_TZ': True,
@@ -27,18 +26,12 @@ SETTINGS_DICT = {
     'MIDDLEWARE_CLASSES': (
         'ridi_django_oauth2.middlewares.AuthenticationMiddleware',
     ),
-    'RIDI_OAUTH2_JWT_SECRETS': [
-        {
-            'kid': '0',
-            'secret': 'dummy_jwt_secret',
-            'alg': 'HS256'
-        },
-    ],
     'RIDI_ridi_oauth2_ID': 'dummy_client_id',
     'RIDI_ridi_oauth2_SECRET': 'dummy_client_secret',
 
     'RIDI_OAUTH2_AUTHORIZATION_URL': 'http://localhost/oauth2/authorize/',
     'RIDI_OAUTH2_TOKEN_URL': 'http://localhost/oauth2/token/',
+    'RIDI_OAUTH2_KEY_URL': 'https://account.dev.ridi.io/oauth2/keys/public',
 }
 
 

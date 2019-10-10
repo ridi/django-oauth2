@@ -1,18 +1,6 @@
 import unittest
 
 from ridi_oauth2.client.dtos import AuthorizationServerInfo, ClientInfo
-from ridi_oauth2.introspector.dtos import JwtInfo
-
-
-class JwtInfoTestCase(unittest.TestCase):
-    def test_jwt_info(self):
-        secret = 'asdfasdfasdf'
-        algorithm = 'HS256'
-
-        jwt_info = JwtInfo(secret=secret, algorithm=algorithm)
-
-        self.assertEqual(jwt_info.secret, secret)
-        self.assertEqual(jwt_info.algorithm, algorithm)
 
 
 class ClientInfoTestCase(unittest.TestCase):

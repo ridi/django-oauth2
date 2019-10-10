@@ -1,19 +1,11 @@
 import typing
-from datetime import datetime
+from base64 import urlsafe_b64decode
+from datetime import datetime, timedelta
 
+from Crypto.PublicKey import RSA
 
-class JwtInfo:
-    def __init__(self, secret: str, algorithm: str):
-        self._secret = secret
-        self._algorithm = algorithm
-
-    @property
-    def secret(self) -> str:
-        return self._secret
-
-    @property
-    def algorithm(self) -> str:
-        return self._algorithm
+from lib.utils.bytes import bytes_to_int
+from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
 
 
 class AccessTokenInfo:
@@ -55,3 +47,40 @@ class AccessTokenInfo:
             subject=dictionary['sub'], u_idx=dictionary['u_idx'], expire=dictionary['exp'], client_id=dictionary['client_id'],
             scope=dictionary['scope'],
         )
+
+
+class JWKDto:
+    def __init__(self, json):
+        self._json = json
+        self.expires = datetime.now() + timedelta(minutes=JWK_EXPIRES_MIN)
+        decoded_n = bytes_to_int(urlsafe_b64decode(self.n))
+        decoded_e = bytes_to_int(urlsafe_b64decode(self.e))
+        self.public_key = RSA.construct((decoded_n, decoded_e)).exportKey().decode()
+
+    @property
+    def alg(self) -> str:
+        return self._json.get('alg')
+
+    @property
+    def kty(self) -> str:
+        return self._json.get('kty')
+
+    @property
+    def use(self) -> str:
+        return self._json.get('use')
+
+    @property
+    def e(self) -> str:
+        return self._json.get('e')
+
+    @property
+    def n(self) -> str:
+        return self._json.get('n')
+
+    @property
+    def kid(self) -> str:
+        return self._json.get('kid')
+
+    @property
+    def is_expired(self) -> bool:
+        return self.expires < datetime.now()

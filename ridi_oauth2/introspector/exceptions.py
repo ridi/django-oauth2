@@ -8,3 +8,31 @@ class ExpireTokenException(Exception):
 
 class InvalidToken(Exception):
     pass
+
+
+class PublicKeyException(Exception):
+    pass
+
+
+class InvalidPublicKey(PublicKeyException):
+    pass
+
+
+class FailToLoadPublicKeyException(PublicKeyException):
+    pass
+
+
+class NotExistedKey(PublicKeyException):
+    pass
+
+
+class PublicRequestException(PublicKeyException):
+    pass
+
+
+class AccountServerException(PublicRequestException):
+    pass
+
+
+class ClientRequestException(PublicRequestException):
+    pass

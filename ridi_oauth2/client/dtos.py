@@ -1,8 +1,8 @@
-import typing
+from typing import Dict
 
 
 class ClientInfo:
-    def __init__(self, client_id: str, client_secret: str, scope: str=None, redirect_uri: str=None):
+    def __init__(self, client_id: str, client_secret: str, scope: str = None, redirect_uri: str = None):
         self._client_id = client_id
         self._client_secret = client_secret
         self._scope = scope
@@ -26,7 +26,7 @@ class ClientInfo:
 
 
 class AuthorizationServerInfo:
-    def __init__(self, authorization_url: str=None, token_url: str=None):
+    def __init__(self, authorization_url: str = None, token_url: str = None):
         self._authorization_url = authorization_url
         self._token_url = token_url
 
@@ -40,7 +40,7 @@ class AuthorizationServerInfo:
 
 
 class Token:
-    def __init__(self, token: str, expires_in: int=None):
+    def __init__(self, token: str, expires_in: int = None):
         self._token = token
         self._expires_in = expires_in
 
@@ -54,7 +54,7 @@ class Token:
 
 
 class TokenData:
-    def __init__(self, access_token: Token, token_type: str=None, scope: str=None, refresh_token: Token=None):
+    def __init__(self, access_token: Token, token_type: str = None, scope: str = None, refresh_token: Token = None):
         self._access_token = access_token
         self._token_type = token_type
         self._scope = scope
@@ -78,7 +78,7 @@ class TokenData:
         return self._refresh_token
 
     @staticmethod
-    def from_dict(dictionary: typing.Dict):
+    def from_dict(dictionary: Dict):
         access_token = None
         if dictionary.get('access_token', None):
             access_token = Token(token=dictionary['access_token'], expires_in=dictionary.get('expires_in', None))
