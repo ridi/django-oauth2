@@ -66,7 +66,6 @@ class KeyHandler:
     @classmethod
     @retry(retry_count=3, retriable_exceptions=(RequestException, AccountServerException,))
     def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[JWKDto]:
-
         response = requests.request(
             method='GET',
             url=RidiOAuth2Config.get_key_url(),
