@@ -26,8 +26,7 @@ class KeyHandler:
         public_key_dto = cls._get_memorized_key_dto(client_id, kid)
 
         if not public_key_dto or public_key_dto.is_expired:
-            cls._reset_key_dtos(client_id)
-            public_key_dto = cls._get_memorized_key_dto(client_id, kid)
+            public_key_dto = cls._reset_key_dtos(client_id, kid)
 
         cls._assert_valid_key(public_key_dto)
 
@@ -41,12 +40,13 @@ class KeyHandler:
             raise InvalidPublicKey
 
     @classmethod
-    def _reset_key_dtos(cls, client_id: str):
+    def _reset_key_dtos(cls, client_id: str, kid: str) -> JWKDto:
         try:
             keys = cls._get_valid_public_keys_by_client_id(client_id)
             cls._memorize_key_dtos(client_id, keys)
         except RetryFailException:
             raise FailToLoadPublicKeyException
+        return cls._get_memorized_key_dto(client_id, kid)
 
     @classmethod
     def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):
