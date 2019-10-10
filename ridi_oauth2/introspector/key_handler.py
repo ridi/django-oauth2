@@ -43,9 +43,12 @@ class KeyHandler:
     def _reset_key_dtos(cls, client_id: str, kid: str) -> JWKDto:
         try:
             keys = cls._get_valid_public_keys_by_client_id(client_id)
-            cls._memorize_key_dtos(client_id, keys)
+
         except RetryFailException:
             raise FailToLoadPublicKeyException
+
+        cls._memorize_key_dtos(client_id, keys)
+
         return cls._get_memorized_key_dto(client_id, kid)
 
     @classmethod
