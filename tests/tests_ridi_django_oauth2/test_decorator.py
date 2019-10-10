@@ -64,7 +64,7 @@ class LoginRequireTestCase(TestCase):
             ).decode(),
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -92,7 +92,7 @@ class LoginRequireTestCase(TestCase):
             ).decode(),
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -150,7 +150,7 @@ class ScopeRequireTestCase(TestCase):
             ).decode(),
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -184,7 +184,7 @@ class ScopeRequireTestCase(TestCase):
             ).decode(),
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -217,7 +217,7 @@ class ScopeRequireTestCase(TestCase):
             ).decode(),
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",

@@ -91,32 +91,3 @@ class TokenData:
             access_token=access_token, token_type=dictionary.get('token_type', None), scope=dictionary.get('scope', None),
             refresh_token=refresh_token
         )
-
-
-class KeyAuthInfo:
-    def __init__(self, data: Dict):
-        self._data = data
-
-    @property
-    def iss(self) -> str:
-        return self._data.get('iss')
-
-    @property
-    def aud(self) -> str:
-        return self._data.get('aud')
-
-    @property
-    def ttl_seconds(self) -> int:
-        return self._data.get('ttl_seconds')
-
-    @property
-    def alg(self) -> str:
-        return self._data.get('alg')
-
-    @property
-    def url(self) -> str:
-        return self._data.get('url')
-
-    @property
-    def secret(self) -> str:
-        return self._data.get('secret')

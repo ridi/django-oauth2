@@ -49,7 +49,7 @@ class AuthenticationMiddlewareTestCase(TestCase):
             RidiOAuth2Config.get_access_token_cookie_key(): self.valid_token,
         }
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -73,7 +73,7 @@ class AuthenticationMiddlewareTestCase(TestCase):
         }
 
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -97,7 +97,7 @@ class AuthenticationMiddlewareTestCase(TestCase):
         }
 
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
@@ -121,7 +121,7 @@ class AuthenticationMiddlewareTestCase(TestCase):
         }
 
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",

@@ -38,7 +38,7 @@ class TokenUtilTestCase(TestCase):
         valid_token = jwt.encode(payload=payload, key=private_key, algorithm='RS256', headers=headers).decode()
 
         with requests_mock.Mocker() as m:
-            m.get(RidiOAuth2Config.get_internal_key_auth_info().url, text=json.dumps({
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
                 'keys': [{
                     'kid': 'RS999',
                     "alg": "RS256",
