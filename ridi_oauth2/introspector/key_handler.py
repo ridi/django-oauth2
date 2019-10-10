@@ -3,19 +3,15 @@ from typing import Dict, List
 
 import jwt
 import requests
-from Crypto.PublicKey import RSA
 from requests import RequestException, Response
 
-from lib.decorators.memorize import memorize
 from lib.decorators.retry import RetryFailException, retry
-from lib.utils.bytes import bytes_to_int
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
-from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse, JWK_EXPIRES_MIN
+from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
 from ridi_oauth2.introspector.dtos import JWKDto
-from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey, \
-    InvalidPublicKey
-from base64 import urlsafe_b64decode
+from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, \
+    InvalidPublicKey, NotExistedKey
 
 
 class KeyHandler:
@@ -36,7 +32,7 @@ class KeyHandler:
             if not public_key_dto:
                 raise NotExistedKey
 
-        return cls._get_public_key(public_key_dto)
+        return public_key_dto.public_key
 
     @classmethod
     def _reset_key_dtos(cls, client_id: str):
@@ -54,13 +50,6 @@ class KeyHandler:
                 raise InvalidPublicKey
             key_dtos[key.kid] = key
         cls._public_key_dtos[client_id] = key_dtos
-
-    @staticmethod
-    @memorize(60 * JWK_EXPIRES_MIN)
-    def _get_public_key(key: JWKDto) -> str:
-        decoded_n = bytes_to_int(urlsafe_b64decode(key.n))
-        decoded_e = bytes_to_int(urlsafe_b64decode(key.e))
-        return RSA.construct((decoded_n, decoded_e)).exportKey().decode()
 
     @staticmethod
     def _generate_internal_auth_token(internal_key_auth_info: KeyAuthInfo) -> str:

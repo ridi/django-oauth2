@@ -1,6 +1,10 @@
 import typing
+from base64 import urlsafe_b64decode
 from datetime import datetime, timedelta
 
+from Crypto.PublicKey import RSA
+
+from lib.utils.bytes import bytes_to_int
 from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
 
 
@@ -49,6 +53,9 @@ class JWKDto:
     def __init__(self, json):
         self._json = json
         self.expires = datetime.now() + timedelta(minutes=JWK_EXPIRES_MIN)
+        decoded_n = bytes_to_int(urlsafe_b64decode(self.n))
+        decoded_e = bytes_to_int(urlsafe_b64decode(self.e))
+        self.public_key = RSA.construct((decoded_n, decoded_e)).exportKey().decode()
 
     @property
     def alg(self) -> str:
