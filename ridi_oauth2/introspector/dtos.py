@@ -1,6 +1,8 @@
 import typing
 from datetime import datetime, timedelta
 
+from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
+
 
 class AccessTokenInfo:
     def __init__(self, subject: str, u_idx: int, expire: int, client_id: str, scope: typing.List):
@@ -46,7 +48,7 @@ class AccessTokenInfo:
 class JWKDto:
     def __init__(self, json):
         self._json = json
-        self.expires = datetime.now() + timedelta(hours=1)
+        self.expires = datetime.now() + timedelta(minutes=JWK_EXPIRES_MIN)
 
     @property
     def alg(self) -> str:
