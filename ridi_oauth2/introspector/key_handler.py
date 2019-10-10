@@ -29,10 +29,16 @@ class KeyHandler:
             cls._reset_key_dtos(client_id)
             public_key_dto = cls._get_memorized_key_dto(client_id, kid)
 
-            if not public_key_dto:
-                raise NotExistedKey
+        cls._assert_valid_key(public_key_dto)
 
         return public_key_dto.public_key
+
+    @staticmethod
+    def _assert_valid_key(key: JWKDto):
+        if not key:
+            raise NotExistedKey
+        if key.kty != JWKKeyType.RSA or key.use != JWKUse.SIG:
+            raise InvalidPublicKey
 
     @classmethod
     def _reset_key_dtos(cls, client_id: str):
@@ -46,8 +52,6 @@ class KeyHandler:
     def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):
         key_dtos = cls._public_key_dtos.get(client_id, {})
         for key in keys:
-            if key.kty != JWKKeyType.RSA or key.use != JWKUse.SIG:
-                raise InvalidPublicKey
             key_dtos[key.kid] = key
         cls._public_key_dtos[client_id] = key_dtos
 
