@@ -3,13 +3,17 @@ from typing import Dict, List
 
 import jwt
 import requests
+from Crypto.PublicKey import RSA
 from requests import RequestException, Response
 
+from lib.decorators.memorize import memorize
 from lib.decorators.retry import RetryFailException, retry
+from lib.utils.bytes import bytes_to_int
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
-from ridi_oauth2.introspector.dtos import KeyDto
+from ridi_oauth2.introspector.dtos import JWKDto
 from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey
+from base64 import urlsafe_b64decode
 
 
 class KeyHandler:
@@ -31,18 +35,25 @@ class KeyHandler:
             if not public_key_dto:
                 raise NotExistedKey
 
-        return public_key_dto.public_key
+        return cls._get_public_pem(public_key_dto)
 
     @classmethod
-    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> KeyDto:
+    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> JWKDto:
         return cls._public_key_dtos.get(client_id, {}).get(kid, None)
 
     @classmethod
-    def _memorize_key_dtos(cls, client_id: str, keys: List[KeyDto]):
+    def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):
         key_dtos = cls._public_key_dtos.get(client_id, {})
         for key in keys:
             key_dtos[key.kid] = key
         cls._public_key_dtos[client_id] = key_dtos
+
+    @staticmethod
+    @memorize(60 * 60)
+    def _get_public_pem(key: JWKDto) -> str:
+        decoded_n = bytes_to_int(urlsafe_b64decode(key.n))
+        decoded_e = bytes_to_int(urlsafe_b64decode(key.e))
+        return RSA.construct((decoded_n, decoded_e)).exportKey()
 
     @staticmethod
     def _generate_internal_auth_token(internal_key_auth_info: KeyAuthInfo) -> str:
@@ -63,7 +74,7 @@ class KeyHandler:
 
     @classmethod
     @retry(retry_count=3, retriable_exceptions=(RequestException, AccountServerException,))
-    def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[KeyDto]:
+    def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[JWKDto]:
         internal_key_auth_info = RidiOAuth2Config.get_internal_key_auth_info()
         headers = {'Authorization': f'Bearer {cls._generate_internal_auth_token(internal_key_auth_info)}'}
 
@@ -73,4 +84,4 @@ class KeyHandler:
             headers=headers,
             params={'client_id': client_id},
         )
-        return [KeyDto(key) for key in cls._process_response(response=response).get('keys')]
+        return [JWKDto(key) for key in cls._process_response(response=response).get('keys')]

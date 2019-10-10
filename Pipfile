@@ -9,6 +9,7 @@ name = "pypi"
 "PyJWT" = "==1.6.1"
 "requests" = "==2.20.0"
 "cryptography" = "==2.3"
+"pycrypto" = "==2.6.1"
 
 [dev-packages]
 "flake8" = "*"

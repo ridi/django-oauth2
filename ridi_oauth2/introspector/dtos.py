@@ -1,5 +1,5 @@
 import typing
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class AccessTokenInfo:
@@ -43,17 +43,30 @@ class AccessTokenInfo:
         )
 
 
-class KeyDto:
+class JWKDto:
     def __init__(self, json):
         self._json = json
+        self.expires = datetime.now() + timedelta(hours=1)
 
     @property
-    def expires(self) -> datetime:
-        return datetime.strptime(self._json.get('expires'), '%Y-%m-%dT%H:%M:%S')
+    def alg(self) -> str:
+        return self._json.get('alg')
 
     @property
-    def public_key(self) -> str:
-        return self._json.get('public_key')
+    def kty(self) -> str:
+        return self._json.get('kty')
+
+    @property
+    def use(self) -> str:
+        return self._json.get('use')
+
+    @property
+    def e(self) -> str:
+        return self._json.get('e')
+
+    @property
+    def n(self) -> str:
+        return self._json.get('n')
 
     @property
     def kid(self) -> str:
