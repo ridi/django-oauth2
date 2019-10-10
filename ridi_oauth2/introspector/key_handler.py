@@ -30,32 +30,34 @@ class KeyHandler:
         public_key_dto = cls._get_memorized_key_dto(client_id, kid)
 
         if not public_key_dto or public_key_dto.is_expired:
-            try:
-                keys = cls._get_valid_public_keys_by_client_id(client_id)
-                cls._memorize_key_dtos(client_id, keys)
-            except RetryFailException:
-                raise FailToLoadPublicKeyException
-
+            cls._reset_key_dtos(client_id)
             public_key_dto = cls._get_memorized_key_dto(client_id, kid)
 
             if not public_key_dto:
                 raise NotExistedKey
 
-            if public_key_dto.kty != JWKKeyType.RSA or public_key_dto.use != JWKUse.SIG:
-                raise InvalidPublicKey
+        return cls._get_public_key(public_key_dto)
 
-        return cls._get_public_pem(public_key_dto)
+    @classmethod
+    def _reset_key_dtos(cls, client_id: str):
+        try:
+            keys = cls._get_valid_public_keys_by_client_id(client_id)
+            cls._memorize_key_dtos(client_id, keys)
+        except RetryFailException:
+            raise FailToLoadPublicKeyException
 
     @classmethod
     def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):
         key_dtos = cls._public_key_dtos.get(client_id, {})
         for key in keys:
+            if key.kty != JWKKeyType.RSA or key.use != JWKUse.SIG:
+                raise InvalidPublicKey
             key_dtos[key.kid] = key
         cls._public_key_dtos[client_id] = key_dtos
 
     @staticmethod
     @memorize(60 * JWK_EXPIRES_MIN)
-    def _get_public_pem(key: JWKDto) -> str:
+    def _get_public_key(key: JWKDto) -> str:
         decoded_n = bytes_to_int(urlsafe_b64decode(key.n))
         decoded_e = bytes_to_int(urlsafe_b64decode(key.e))
         return RSA.construct((decoded_n, decoded_e)).exportKey().decode()
