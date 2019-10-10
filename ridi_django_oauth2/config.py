@@ -19,13 +19,13 @@ _RIDI_COOKIE_DOMAIN = getattr(settings, _SettingKeyName.COOKIE_DOMAIN, _Default.
 _RIDI_ACCESS_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.ACCESS_TOKEN_COOKIE_KEY, _Default.ACCESS_TOKEN_COOKIE_KEY)
 _RIDI_REFRESH_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.REFRESH_TOKEN_COOKIE_KEY, _Default.REFRESH_TOKEN_COOKIE_KEY)
 
-RIDI_OAUTH2_KEY_URL = getattr(settings, _SettingKeyName.KEY_URL)
+_RIDI_OAUTH2_KEY_URL = getattr(settings, _SettingKeyName.KEY_URL)
 
 
 class RidiOAuth2Config:
     @staticmethod
     def get_key_url() -> str:
-        return RIDI_OAUTH2_KEY_URL
+        return _RIDI_OAUTH2_KEY_URL
 
     @staticmethod
     def get_cookie_domain() -> str:
