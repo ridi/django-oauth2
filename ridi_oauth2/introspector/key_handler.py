@@ -41,7 +41,7 @@ class KeyHandler:
             if not public_key_dto:
                 raise NotExistedKey
 
-            if public_key_dto.kty is not JWKKeyType.RSA or public_key_dto.use is not JWKUse.SIG:
+            if public_key_dto.kty != JWKKeyType.RSA or public_key_dto.use != JWKUse.SIG:
                 raise InvalidPublicKey
 
         return cls._get_public_pem(public_key_dto)
