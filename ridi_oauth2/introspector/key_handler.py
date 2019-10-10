@@ -11,7 +11,7 @@ from lib.decorators.retry import RetryFailException, retry
 from lib.utils.bytes import bytes_to_int
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
-from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
+from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse, JWK_EXPIRES_MIN
 from ridi_oauth2.introspector.dtos import JWKDto
 from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey, \
     InvalidPublicKey
@@ -54,7 +54,7 @@ class KeyHandler:
         cls._public_key_dtos[client_id] = key_dtos
 
     @staticmethod
-    @memorize(60 * 60)
+    @memorize(60 * JWK_EXPIRES_MIN)
     def _get_public_pem(key: JWKDto) -> str:
         decoded_n = bytes_to_int(urlsafe_b64decode(key.n))
         decoded_e = bytes_to_int(urlsafe_b64decode(key.e))
