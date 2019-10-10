@@ -53,7 +53,7 @@ class KeyHandler:
     def _get_public_pem(key: JWKDto) -> str:
         decoded_n = bytes_to_int(urlsafe_b64decode(key.n))
         decoded_e = bytes_to_int(urlsafe_b64decode(key.e))
-        return RSA.construct((decoded_n, decoded_e)).exportKey()
+        return RSA.construct((decoded_n, decoded_e)).exportKey().decode()
 
     @staticmethod
     def _generate_internal_auth_token(internal_key_auth_info: KeyAuthInfo) -> str:
