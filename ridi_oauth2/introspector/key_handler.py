@@ -11,13 +11,19 @@ from lib.decorators.retry import RetryFailException, retry
 from lib.utils.bytes import bytes_to_int
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.client.dtos import KeyAuthInfo
+from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
 from ridi_oauth2.introspector.dtos import JWKDto
-from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey
+from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, NotExistedKey, \
+    InvalidPublicKey
 from base64 import urlsafe_b64decode
 
 
 class KeyHandler:
     _public_key_dtos = {}
+
+    @classmethod
+    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> JWKDto:
+        return cls._public_key_dtos.get(client_id, {}).get(kid, None)
 
     @classmethod
     def get_public_key_by_kid(cls, client_id: str, kid: str):
@@ -35,11 +41,10 @@ class KeyHandler:
             if not public_key_dto:
                 raise NotExistedKey
 
-        return cls._get_public_pem(public_key_dto)
+            if public_key_dto.kty is not JWKKeyType.RSA or public_key_dto.use is not JWKUse.SIG:
+                raise InvalidPublicKey
 
-    @classmethod
-    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> JWKDto:
-        return cls._public_key_dtos.get(client_id, {}).get(kid, None)
+        return cls._get_public_pem(public_key_dto)
 
     @classmethod
     def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):

@@ -14,6 +14,10 @@ class PublicKeyException(Exception):
     pass
 
 
+class InvalidPublicKey(PublicKeyException):
+    pass
+
+
 class FailToLoadPublicKeyException(PublicKeyException):
     pass
 
