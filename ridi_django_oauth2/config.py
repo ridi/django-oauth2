@@ -46,4 +46,4 @@ class RidiOAuth2Config:
 
     @staticmethod
     def get_user_from_token_info_callable() -> Optional[Callable]:
-        return _RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO
+        return _RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO if callable(_RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO) else None
