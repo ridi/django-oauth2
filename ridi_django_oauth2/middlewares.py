@@ -31,7 +31,7 @@ class AuthenticationMiddleware(MiddlewareMixin):
     def _set_user_in_request(request, token_info: AccessTokenInfo, token: TokenData):
         get_user_from_token_info = RidiOAuth2Config.get_user_from_token_info_callable()
 
-        if get_user_from_token_info:
+        if get_user_from_token_info and callable(get_user_from_token_info):
             user = get_user_from_token_info(token_info)
 
         else:
