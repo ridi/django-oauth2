@@ -1,5 +1,9 @@
 Changelog
 =========
+1.0.3 (Oct 11st 2019)
+------------------
+- fix package not found bugs
+    
 1.0.2 (Oct 11st 2019)
 ------------------
 - Add `RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO` option in setting
