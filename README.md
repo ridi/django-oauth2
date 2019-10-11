@@ -42,7 +42,14 @@ REST_FRAMEWORK = {
 }
 
 # OPTIONAL
-RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO = _get_user_from_token_info #  _get_user_from_token_info는 callable 이여야 합니다.
+
+# RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO 는 user model이 `u_idx` col과 호환되지 않을시 사용합니다.
+
+def _get_user_from_token_info(token_info):
+    user, _ = get_user_model().objects.get_or_create(idx=token_info.u_idx)
+    return user
+     
+RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO = _get_user_from_token_info
 ```
 
 
