@@ -1,6 +1,6 @@
 Changelog
 =========
-1.0.0 (Oct 10st 2019)
+1.0.1 (Oct 10st 2019)
 ------------------
 - Change lib dir to ridi_django_oauth2_lib for preventing dir conflict
 - Update README.md
