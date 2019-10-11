@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from Crypto.PublicKey import RSA
 
-from lib.utils.bytes import bytes_to_int
+from ridi_django_oauth2_lib.utils.bytes import bytes_to_int
 from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
 
 

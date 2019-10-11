@@ -1,5 +1,10 @@
 Changelog
 =========
+1.0.1 (Oct 10st 2019)
+------------------
+- Change lib dir to ridi_django_oauth2_lib for preventing dir conflict
+- Update README.md
+
 1.0.0 (Oct 10st 2019)
 ------------------
 - Change main logic to get public key from OAuth2 server

@@ -28,18 +28,7 @@ AUTH_USER_MODEL = 'ridi_django_oauth2.RidiUser'
 
 
 # RIDI Setting
-RIDI_OAUTH2_JWT_SECRETS = [
-    {
-        'kid': '0',
-        'secret': 'this-is-hs256-key',
-        'alg': 'HS256',
-    },
-    {
-        'kid': '1',
-        'secret': 'this-is-rs256-public-key',
-        'alg': 'RS256',
-    },
-]
+RIDI_OAUTH2_KEY_URL = 'https://{auth_server_host}/oauth2/keys/public'
 RIDI_OAUTH2_CLIENT_ID = 'this-is-client-id'
 RIDI_OAUTH2_CLIENT_SECRET = 'this-is-client-secret'
 

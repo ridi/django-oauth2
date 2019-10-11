@@ -3,7 +3,7 @@ from typing import Dict, List
 import requests
 from requests import RequestException, Response
 
-from lib.decorators.retry import RetryFailException, retry
+from ridi_django_oauth2_lib.decorators.retry import RetryFailException, retry
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
 from ridi_oauth2.introspector.dtos import JWKDto
