@@ -35,12 +35,21 @@ RIDI_OAUTH2_CLIENT_SECRET = 'this-is-client-secret'
 RIDI_OAUTH2_AUTHORIZATION_URL = 'https://{auth_server_host}/oauth2/authorize/'
 RIDI_OAUTH2_TOKEN_URL: 'https://{auth_server_host}/oauth2/token/'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'ridi_django_oauth2.rest_framework.authentication.OAuth2Authentication',
     )
 }
+
+# OPTIONAL
+
+# RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO 는 user model이 `u_idx` col과 호환되지 않을시 사용합니다.
+
+def _get_user_from_token_info(token_info):
+    user, _ = get_user_model().objects.get_or_create(idx=token_info.u_idx)
+    return user
+     
+RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO = _get_user_from_token_info
 ```
 
 

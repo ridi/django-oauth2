@@ -3,8 +3,15 @@ import sys
 
 import django
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 sys.path.append(os.path.abspath('./src'))
+
+
+def _get_user_from_token_info(token_info):
+    user, _ = get_user_model().objects.get_or_create(u_idx=token_info.u_idx)
+    return user
+
 
 SETTINGS_DICT = {
     'DEBUG': True,
@@ -32,6 +39,7 @@ SETTINGS_DICT = {
     'RIDI_OAUTH2_AUTHORIZATION_URL': 'http://localhost/oauth2/authorize/',
     'RIDI_OAUTH2_TOKEN_URL': 'http://localhost/oauth2/token/',
     'RIDI_OAUTH2_KEY_URL': 'https://account.dev.ridi.io/oauth2/keys/public',
+    'RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO': _get_user_from_token_info
 }
 
 

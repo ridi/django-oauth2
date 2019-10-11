@@ -1,6 +1,11 @@
 Changelog
 =========
-1.0.1 (Oct 10st 2019)
+1.0.2 (Oct 11st 2019)
+------------------
+- Add `RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO` option in setting
+    - to use token_info for getting user object, it can be used.
+    
+1.0.1 (Oct 11st 2019)
 ------------------
 - Change lib dir to ridi_django_oauth2_lib for preventing dir conflict
 - Update README.md

@@ -1,3 +1,5 @@
+from typing import Callable, Optional
+
 from django.conf import settings
 
 
@@ -6,6 +8,7 @@ class _SettingKeyName:
     COOKIE_DOMAIN = 'RIDI_OAUTH2_COOKIE_DOMAIN'
     ACCESS_TOKEN_COOKIE_KEY = 'RIDI_OAUTH2_ACCESS_TOKEN_COOKIE_KEY'
     REFRESH_TOKEN_COOKIE_KEY = 'RIDI_OAUTH2_REFRESH_TOKEN_COOKIE_KEY'
+    GET_USER_FROM_TOKEN_INFO = 'RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO'
 
 
 class _Default:
@@ -20,6 +23,8 @@ _RIDI_ACCESS_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.ACCESS_TOKEN_C
 _RIDI_REFRESH_TOKEN_COOKIE_KEY = getattr(settings, _SettingKeyName.REFRESH_TOKEN_COOKIE_KEY, _Default.REFRESH_TOKEN_COOKIE_KEY)
 
 _RIDI_OAUTH2_KEY_URL = getattr(settings, _SettingKeyName.KEY_URL)
+
+_RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO = getattr(settings, _SettingKeyName.GET_USER_FROM_TOKEN_INFO, None)
 
 
 class RidiOAuth2Config:
@@ -38,3 +43,7 @@ class RidiOAuth2Config:
     @staticmethod
     def get_refresh_token_cookie_key() -> str:
         return _RIDI_REFRESH_TOKEN_COOKIE_KEY
+
+    @staticmethod
+    def get_user_from_token_info_callable() -> Optional[Callable]:
+        return _RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO if callable(_RIDI_OAUTH2_GET_USER_FROM_TOKEN_INFO) else None
