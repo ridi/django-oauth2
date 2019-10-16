@@ -1,5 +1,10 @@
 Changelog
 =========
+1.0.4 (Oct 16st 2019)
+------------------
+- dependency updated
+    - cryptography, pycrypto added
+    
 1.0.3 (Oct 11st 2019)
 ------------------
 - fix package not found bugs
