@@ -1,5 +1,10 @@
 Changelog
 =========
+1.0.5 (Dec 2nd 2019)
+------------------
+- dependency updated
+    - pycrypto removed
+
 1.0.4 (Oct 16st 2019)
 ------------------
 - dependency updated
