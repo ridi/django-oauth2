@@ -2,7 +2,9 @@ import typing
 from base64 import urlsafe_b64decode
 from datetime import datetime, timedelta
 
-from Crypto.PublicKey import RSA
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
+from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+from cryptography.hazmat.backends import default_backend
 
 from ridi_django_oauth2_lib.utils.bytes import bytes_to_int
 from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
@@ -55,7 +57,8 @@ class JWKDto:
         self.expires = datetime.now() + timedelta(minutes=JWK_EXPIRES_MIN)
         decoded_n = bytes_to_int(urlsafe_b64decode(self.n))
         decoded_e = bytes_to_int(urlsafe_b64decode(self.e))
-        self.public_key = RSA.construct((decoded_n, decoded_e)).exportKey().decode()
+        rsa_public_key = RSAPublicNumbers(decoded_e, decoded_n).public_key(default_backend())
+        self.public_key = rsa_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode()
 
     @property
     def alg(self) -> str:
