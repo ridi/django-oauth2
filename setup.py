@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '1.0.4'
+version = '1.0.5'
 
 # When the project is installed by pip, this is the specification that is used to install its dependencies.
 install_requires = [
@@ -9,7 +9,6 @@ install_requires = [
     "PyJWT>=1.6.1",
     "requests>=2.20.0",
     "cryptography>=2.3",
-    "pycrypto>=2.6.1"
 ]
 
 setup(
