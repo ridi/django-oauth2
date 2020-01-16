@@ -62,8 +62,8 @@ class Grant:
             response = requests.request(method=method, url=url, data=data, headers=headers)
             response.raise_for_status()
             return TokenData.from_dict(response.json())
-        except JSONDecodeError:
-            raise InvalidResponseException()
+        except JSONDecodeError as e:
+            raise InvalidResponseException() from e
         except requests.HTTPError as e:
             cls._process_exception(exception=e)
 
@@ -73,8 +73,8 @@ class Grant:
 
         try:
             error_response = response.json()
-        except JSONDecodeError:
-            raise exception
+        except JSONDecodeError as e:
+            raise exception from e
 
         error = error_response.get('error', None)
         error_description = error_response.get('error_description', None)
