@@ -41,8 +41,8 @@ class KeyHandler:
         try:
             keys = cls._get_valid_public_keys_by_client_id(client_id)
 
-        except RetryFailException:
-            raise FailToLoadPublicKeyException
+        except RetryFailException as e:
+            raise FailToLoadPublicKeyException from e
 
         cls._memorize_key_dtos(client_id, keys)
 

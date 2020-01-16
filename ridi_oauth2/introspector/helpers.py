@@ -13,8 +13,8 @@ class JwtIntrospectHelper:
         try:
             unverified_header = jwt.get_unverified_header(access_token)
             unverified_payload = jwt.decode(access_token, verify=False)
-        except jwt.InvalidTokenError:
-            raise InvalidToken
+        except jwt.InvalidTokenError as e:
+            raise InvalidToken from e
 
         kid = unverified_header.get('kid', None)
         client_id = unverified_payload.get('client_id', None)
@@ -27,5 +27,5 @@ class JwtIntrospectHelper:
         try:
             payload = jwt.decode(jwt=access_token, key=public_key, algorithms=unverified_header.get('alg'))
             return AccessTokenInfo.from_dict(payload)
-        except (InvalidTokenError, InvalidKeyError):
-            raise InvalidJwtSignatureException
+        except (InvalidTokenError, InvalidKeyError) as e:
+            raise InvalidJwtSignatureException from e
