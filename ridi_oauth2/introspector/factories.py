@@ -4,7 +4,7 @@ from ridi_oauth2.introspector.dtos import JWKRSADto, JWKECDto, BaseJWKDto
 
 class JWKDtoFactory:
     @staticmethod
-    def getDto(json) -> BaseJWKDto:
+    def get_dto(json) -> BaseJWKDto:
         kty = json.get('kty')
         if kty == JWKKeyType.RSA:
             return JWKRSADto(json)

@@ -72,4 +72,4 @@ class KeyHandler:
             url=RidiOAuth2Config.get_key_url(),
             params={'client_id': client_id},
         )
-        return [JWKDtoFactory.getDto(key) for key in cls._process_response(response=response).get('keys')]
+        return [JWKDtoFactory.get_dto(key) for key in cls._process_response(response=response).get('keys')]
