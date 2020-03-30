@@ -9,3 +9,7 @@ class JWKKeyType:
 
 class JWKUse:
     SIG = 'sig'
+
+
+class JWKCrv:
+    P256 = 'P-256'

@@ -2,12 +2,13 @@ import typing
 from base64 import urlsafe_b64decode
 from datetime import datetime, timedelta
 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePublicNumbers, SECP256R1
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-from cryptography.hazmat.backends import default_backend
 
 from ridi_django_oauth2_lib.utils.bytes import bytes_to_int
-from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
+from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN, JWKCrv
 
 
 class AccessTokenInfo:
@@ -51,18 +52,14 @@ class AccessTokenInfo:
         )
 
 
-class JWKDto:
+class BaseJWKDto:
     def __init__(self, json):
         self._json = json
         self.expires = datetime.now() + timedelta(minutes=JWK_EXPIRES_MIN)
-        decoded_n = bytes_to_int(urlsafe_b64decode(self.n))
-        decoded_e = bytes_to_int(urlsafe_b64decode(self.e))
-        rsa_public_key = RSAPublicNumbers(decoded_e, decoded_n).public_key(default_backend())
-        self.public_key = rsa_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode()
 
     @property
-    def alg(self) -> str:
-        return self._json.get('alg')
+    def kid(self) -> str:
+        return self._json.get('kid')
 
     @property
     def kty(self) -> str:
@@ -73,6 +70,23 @@ class JWKDto:
         return self._json.get('use')
 
     @property
+    def alg(self) -> str:
+        return self._json.get('alg')
+
+    @property
+    def is_expired(self) -> bool:
+        return self.expires < datetime.now()
+
+
+class JWKRSADto(BaseJWKDto):
+    def __init__(self, json):
+        super().__init__(json)
+        decoded_n = bytes_to_int(urlsafe_b64decode(self.n))
+        decoded_e = bytes_to_int(urlsafe_b64decode(self.e))
+        rsa_public_key = RSAPublicNumbers(decoded_e, decoded_n).public_key(default_backend())
+        self.public_key = rsa_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode()
+
+    @property
     def e(self) -> str:
         return self._json.get('e')
 
@@ -80,10 +94,33 @@ class JWKDto:
     def n(self) -> str:
         return self._json.get('n')
 
-    @property
-    def kid(self) -> str:
-        return self._json.get('kid')
+
+class JWKECDto(BaseJWKDto):
+    def __init__(self, json):
+        super().__init__(json)
+        decoded_x = bytes_to_int(urlsafe_b64decode(self.x))
+        decoded_y = bytes_to_int(urlsafe_b64decode(self.y))
+        ec_public_key = EllipticCurvePublicNumbers(
+            decoded_x,
+            decoded_y,
+            self._get_curve_instance()
+        ).public_key(default_backend())
+        self.public_key = ec_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode()
+
+    def _get_curve_instance(self):
+        if self.crv == JWKCrv.P256:
+            return SECP256R1()
+
+        raise NotImplementedError
 
     @property
-    def is_expired(self) -> bool:
-        return self.expires < datetime.now()
+    def crv(self) -> str:
+        return self._json.get('crv')
+
+    @property
+    def x(self) -> str:
+        return self._json.get('x')
+
+    @property
+    def y(self) -> str:
+        return self._json.get('y')

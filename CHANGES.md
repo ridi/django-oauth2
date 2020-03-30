@@ -1,5 +1,9 @@
 Changelog
 =========
+1.0.6 (Mar 30th 2020)
+------------------
+- support 'EC' key_type on JWKS
+
 1.0.5 (Dec 2nd 2019)
 ------------------
 - dependency updated
