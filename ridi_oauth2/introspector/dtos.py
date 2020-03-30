@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
 from ridi_django_oauth2_lib.utils.bytes import bytes_to_int
-from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN
+from ridi_oauth2.introspector.constants import JWK_EXPIRES_MIN, JWKCrv
 
 
 class AccessTokenInfo:
@@ -100,8 +100,18 @@ class JWKECDto(BaseJWKDto):
         super().__init__(json)
         decoded_x = bytes_to_int(urlsafe_b64decode(self.x))
         decoded_y = bytes_to_int(urlsafe_b64decode(self.y))
-        ec_public_key = EllipticCurvePublicNumbers(decoded_x, decoded_y, SECP256R1()).public_key(default_backend())
+        ec_public_key = EllipticCurvePublicNumbers(
+            decoded_x,
+            decoded_y,
+            self._get_curve_instance()
+        ).public_key(default_backend())
         self.public_key = ec_public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo).decode()
+
+    def _get_curve_instance(self):
+        if self.crv == JWKCrv.P256:
+            return SECP256R1()
+
+        raise NotImplementedError
 
     @property
     def crv(self) -> str:
