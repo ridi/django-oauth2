@@ -1,13 +1,25 @@
 import json
 import time
+from base64 import urlsafe_b64encode
 from unittest.mock import Mock
 
 import jwt
 import requests_mock
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.utils import int_to_bytes
 from django.test import TestCase
 
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_django_oauth2.utils.token import get_token_from_cookie, get_token_info
+
+
+def generate_ec_private_key():
+    return ec.generate_private_key(
+            curve=ec.SECP256R1,
+            backend=default_backend()
+    )
 
 
 class TokenUtilTestCase(TestCase):
@@ -22,7 +34,7 @@ class TokenUtilTestCase(TestCase):
         self.assertEqual(token.access_token.token, 'this-is-access-token')
         self.assertEqual(token.refresh_token.token, 'this-is-refresh-token')
 
-    def test_token_info(self):
+    def test_token_info_by_rsa(self):
         payload = {
             'sub': 'testuser',
             'u_idx': 123123,
@@ -46,6 +58,53 @@ class TokenUtilTestCase(TestCase):
                     "use": "sig",
                     "n": "1rL5PCEv2PaAASaGldzfnlo0MiMCglC-eFxYHgUfa6a7qJhjo0QX8LeAelBlQpMCAMVGX33jUJ2FCCP_QDk3NIu74AgP7F3Z7IdmVvOfkt2myF1n3ZDyCHKdyi7MnOBtHIQCqQRGZ4XH2Ss5bmg_FuplBFT82e14UVmZx4kP-HwDjaSpvYHoTr3b5j20Ebx7aIy_SVrWeY0wxeAdFf-EOuEBQ-QIIe5Npd49gzq4CGHeNJlPQjs0EjMZFtPutCrIRSoEaLwccKQEIHcMSbsBLCJIJ5OuTmtK2WaSh7VYCrJsCbPh5tYKF6akN7TSOtDwGQVKwJjjOsxkPdYXNoAnIQ==",
                     "e": "AQAB",
+                }]
+            }))
+
+            token_info = get_token_info(token=valid_token)
+
+        self.assertEqual(token_info.subject, payload['sub'])
+        self.assertEqual(token_info.u_idx, payload['u_idx'])
+        self.assertEqual(token_info.expire_timestamp, payload['exp'])
+        self.assertEqual(token_info.client_id, payload['client_id'])
+        self.assertIn(payload['scope'], token_info.scope)
+
+    def test_token_info_by_ec(self):
+        ec_key = generate_ec_private_key()
+
+        public_numbers = ec_key.public_key().public_numbers()
+        x = urlsafe_b64encode(int_to_bytes(public_numbers.x)).decode()
+        y = urlsafe_b64encode(int_to_bytes(public_numbers.y)).decode()
+
+        private_key = ec_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption()
+        ).decode()
+
+        payload = {
+            'sub': 'testuser',
+            'u_idx': 123123,
+            'exp': int(time.time()) + 60 * 60,
+            'client_id': 'asfeih29snv8as213i',
+            'scope': 'all'
+        }
+        headers = {
+            'kid': 'ES999',
+        }
+
+        valid_token = jwt.encode(payload=payload, key=private_key, algorithm='ES256', headers=headers).decode()
+
+        with requests_mock.Mocker() as m:
+            m.get(RidiOAuth2Config.get_key_url(), text=json.dumps({
+                'keys': [{
+                    "kty": "EC",
+                    "use": "sig",
+                    "crv": "P-256",
+                    "kid": "ES999",
+                    "x": x,
+                    "y": y,
+                    "alg": "ES256"
                 }]
             }))
 

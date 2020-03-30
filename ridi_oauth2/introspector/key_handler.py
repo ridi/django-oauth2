@@ -3,19 +3,20 @@ from typing import Dict, List
 import requests
 from requests import RequestException, Response
 
-from ridi_django_oauth2_lib.decorators.retry import RetryFailException, retry
 from ridi_django_oauth2.config import RidiOAuth2Config
+from ridi_django_oauth2_lib.decorators.retry import RetryFailException, retry
 from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
-from ridi_oauth2.introspector.dtos import JWKDto
+from ridi_oauth2.introspector.dtos import BaseJWKDto
 from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, \
     InvalidPublicKey, NotExistedKey
+from ridi_oauth2.introspector.factories import JWKDtoFactory
 
 
 class KeyHandler:
     _public_key_dtos = {}
 
     @classmethod
-    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> JWKDto:
+    def _get_memorized_key_dto(cls, client_id: str, kid: str) -> BaseJWKDto:
         return cls._public_key_dtos.get(client_id, {}).get(kid, None)
 
     @classmethod
@@ -30,14 +31,14 @@ class KeyHandler:
         return public_key_dto.public_key
 
     @staticmethod
-    def _assert_valid_key(key: JWKDto):
+    def _assert_valid_key(key: BaseJWKDto):
         if not key:
             raise NotExistedKey
-        if key.kty != JWKKeyType.RSA or key.use != JWKUse.SIG:
+        if key.kty not in (JWKKeyType.RSA, JWKKeyType.EC) or key.use != JWKUse.SIG:
             raise InvalidPublicKey
 
     @classmethod
-    def _reset_key_dtos(cls, client_id: str, kid: str) -> JWKDto:
+    def _reset_key_dtos(cls, client_id: str, kid: str) -> BaseJWKDto:
         try:
             keys = cls._get_valid_public_keys_by_client_id(client_id)
 
@@ -49,7 +50,7 @@ class KeyHandler:
         return cls._get_memorized_key_dto(client_id, kid)
 
     @classmethod
-    def _memorize_key_dtos(cls, client_id: str, keys: List[JWKDto]):
+    def _memorize_key_dtos(cls, client_id: str, keys: List[BaseJWKDto]):
         key_dtos = cls._public_key_dtos.get(client_id, {})
         for key in keys:
             key_dtos[key.kid] = key
@@ -65,10 +66,10 @@ class KeyHandler:
 
     @classmethod
     @retry(retry_count=3, retriable_exceptions=(RequestException, AccountServerException,))
-    def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[JWKDto]:
+    def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[BaseJWKDto]:
         response = requests.request(
             method='GET',
             url=RidiOAuth2Config.get_key_url(),
             params={'client_id': client_id},
         )
-        return [JWKDto(key) for key in cls._process_response(response=response).get('keys')]
+        return [JWKDtoFactory.getDto(key) for key in cls._process_response(response=response).get('keys')]
