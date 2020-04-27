@@ -23,14 +23,16 @@ class AuthenticationMiddleware(MiddlewareMixin):
                 return HttpUnauthorizedResponse()
 
         if token_info is not None:
-            self._set_user_in_request(request, token_info, token)
+            try:
+                self._set_user_in_request(request, token_info, token)
+            except:
+                return HttpUnauthorizedResponse()
 
         return None
 
     @staticmethod
     def _set_user_in_request(request, token_info: AccessTokenInfo, token: TokenData):
         get_user_from_token_info = RidiOAuth2Config.get_user_from_token_info_callable()
-
         if get_user_from_token_info:
             user = get_user_from_token_info(token_info)
 

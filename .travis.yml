@@ -12,8 +12,9 @@ jobs:
   include:
   - stage: test
     before_script: make install-dev
-    script: make lint
-    script: make test
+    script:
+      - make lint
+      - make test
 
   - stage: deploy
     script: skip

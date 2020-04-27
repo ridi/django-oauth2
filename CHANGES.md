@@ -1,8 +1,9 @@
 Changelog
 =========
-1.0.6 (Mar 30th 2020)
+1.0.6 (Apr 27th 2020)
 ------------------
-- support 'EC' key_type on JWKS
+- Support 'EC' key_type on JWKS
+- Add logic to failed in get user object from token_info
 
 1.0.5 (Dec 2nd 2019)
 ------------------
