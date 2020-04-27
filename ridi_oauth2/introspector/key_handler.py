@@ -1,13 +1,13 @@
 from typing import Dict, List
 
 import requests
-from requests import RequestException, Response
+from requests import Response, HTTPError
 
 from ridi_django_oauth2.config import RidiOAuth2Config
 from ridi_django_oauth2_lib.decorators.retry import RetryFailException, retry
 from ridi_oauth2.introspector.constants import JWKKeyType, JWKUse
 from ridi_oauth2.introspector.dtos import BaseJWKDto
-from ridi_oauth2.introspector.exceptions import AccountServerException, ClientRequestException, FailToLoadPublicKeyException, \
+from ridi_oauth2.introspector.exceptions import FailToLoadPublicKeyException, \
     InvalidPublicKey, NotExistedKey
 from ridi_oauth2.introspector.factories import JWKDtoFactory
 
@@ -58,14 +58,11 @@ class KeyHandler:
 
     @staticmethod
     def _process_response(response: Response) -> Dict:
-        if response.status_code >= 500:
-            raise AccountServerException
-        elif response.status_code >= 400:
-            raise ClientRequestException
+        response.raise_for_status()
         return response.json()
 
     @classmethod
-    @retry(retry_count=3, retriable_exceptions=(RequestException, AccountServerException,))
+    @retry(retry_count=3, retriable_exceptions=(HTTPError, ))
     def _get_valid_public_keys_by_client_id(cls, client_id: str) -> List[BaseJWKDto]:
         response = requests.request(
             method='GET',

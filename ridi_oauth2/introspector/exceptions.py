@@ -28,11 +28,3 @@ class NotExistedKey(PublicKeyException):
 
 class PublicRequestException(PublicKeyException):
     pass
-
-
-class AccountServerException(PublicRequestException):
-    pass
-
-
-class ClientRequestException(PublicRequestException):
-    pass
