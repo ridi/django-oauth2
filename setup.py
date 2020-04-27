@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '1.0.7'
+version = '1.0.6'
 
 # When the project is installed by pip, this is the specification that is used to install its dependencies.
 install_requires = [
