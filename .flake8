@@ -2,11 +2,12 @@
 
 # F401  imported but unused
 
-ignore=F401
+ignore=F401, E722
 
 max-line-length=140
 
 exclude =
     ./docs
     ./venv
+    ./tests
     migrations

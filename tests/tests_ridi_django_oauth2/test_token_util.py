@@ -17,8 +17,8 @@ from ridi_django_oauth2.utils.token import get_token_from_cookie, get_token_info
 
 def generate_ec_private_key():
     return ec.generate_private_key(
-            curve=ec.SECP256R1,
-            backend=default_backend()
+        curve=ec.SECP256R1,
+        backend=default_backend()
     )
 
 

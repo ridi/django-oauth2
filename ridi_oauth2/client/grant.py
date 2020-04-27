@@ -57,7 +57,7 @@ class Grant:
         )
 
     @classmethod
-    def _request(cls, method: str, url: str, data: typing.Dict, headers: typing.Dict=None) -> TokenData:
+    def _request(cls, method: str, url: str, data: typing.Dict, headers: typing.Dict = None) -> TokenData:
         try:
             response = requests.request(method=method, url=url, data=data, headers=headers)
             response.raise_for_status()
