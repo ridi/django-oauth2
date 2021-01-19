@@ -6,7 +6,7 @@ version = '1.0.6'
 install_requires = [
     "djangorestframework>=3.7.7",
     "django>=2.2.1",
-    "PyJWT>=1.6.1",
+    "PyJWT==1.6.1",
     "requests>=2.20.0",
     "cryptography>=2.3",
 ]
