@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"djangorestframework" = "==3.9.1"
+"djangorestframework" = "==3.11.2"
 "django" = "==2.2.4"
 "PyJWT" = "==1.6.1"
 "requests" = "==2.20.0"
