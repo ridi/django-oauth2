@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 "djangorestframework" = "==3.9.1"
 "django" = "==2.2.4"
-"PyJWT" = "==1.6.1"
+"PyJWT" = "==2.4.0"
 "requests" = "==2.20.0"
 "cryptography" = "==2.3"
 
