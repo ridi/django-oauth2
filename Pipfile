@@ -8,7 +8,7 @@ name = "pypi"
 "django" = "==2.2.4"
 "PyJWT" = "==1.6.1"
 "requests" = "==2.20.0"
-"cryptography" = "==2.3"
+"cryptography" = "==39.0.1"
 
 [dev-packages]
 "flake8" = "*"
